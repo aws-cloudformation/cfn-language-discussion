@@ -3,7 +3,6 @@
 This is a request for comments about {RFC_DESCRIPTION}. See #{TRACKING_ISSUE} for
 additional details. 
 
-
 ---
 
 ## Licensing
