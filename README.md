@@ -1,21 +1,23 @@
 # CFN Language Discussion
 
 ## What is it?
-This repo is a place to propose and discuss new language features for the CloudFormation template language. It is also a great place to request CFN language features, report CFN language bugs or any general discussion related to the CloudFormation template language.
+This repo is a place to propose and discuss new language features for the CloudFormation template language. It is also a great place to request CloudFormation template language features, report CloudFormation template language bugs or any general discussion related to the CloudFormation template language.
 
 ## What is an RFC?
 
 An RFC (request for comment) is a text document proposing a change to the CloudFormation template language. RFCs will only contain customer-facing syntax and behavior, not implementation details, and while we welcome all customer feedback on the proposal, the CloudFormation team will have final authority on decisions around the proposal.
 
-### When should I write an RFC
-You will need to draft an RFC when you propose a new language feature in CloudFormation template language. Examples are:
+### When should I write an RFC?
+
+You will need to draft an RFC when you propose a new language feature in the CloudFormation template language. Examples are:
 
    - New intrinsic functions
    - New parameter types
    - New functionality for an existing intrinsic funtion.
 
-### Who should submit an RFC
-An RFC can be submitted by anyone. In most cases, RFCs are authored by CloudFormation team members, but contributors are more than welcome to submit RFCs.
+### Who should submit an RFC?
+
+An RFC can be submitted by anyone. In most cases, RFCs are authored by CloudFormation team members, but contributors are more than welcome to submit RFCs as well. However, RFCs can be a bit formal and time-consuming, so we highly recommend first creating an issue to discuss a new language feature proposal at a high level before diving into writing a detailed RFC document for it.
 
 ## RFC Process
 
@@ -86,14 +88,15 @@ Once CloudFormation Language team picks up the RFC and starts implementation, we
 
 Once Implementation complete, CloudFormation Language team will change status label to `status/done` and close the tracking issue.
 
+TODO
 
-## Report bugs or suggest features in CloudFormation Template Language
+## Report bugs or suggest features in the CloudFormation Template Language
 
 We welcome you to use the GitHub issue tracker to report bugs or suggest features.
 
-When filing an issue, please check existing open, or recently closed, issues to make sure somebody else hasn't already reported the issue. 
+When filing an issue, please check existing open or recently closed issues to make sure somebody else hasn't already reported the issue. 
 
-Please [bug report template](.github/ISSUE_TEMPLATE/bug_report.md) for reporting bugs and [feature request template](.github/ISSUE_TEMPLATE/feature_request.md) for requesting new features.
+Please use the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md) for reporting bugs and the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md) for requesting new features.
 
 ## Security
 
@@ -104,5 +107,6 @@ If you discover a potential security issue in this project we ask that you notif
 This project is licensed under the Apache-2.0 License.
 
 ---
+
 ## Credit
 AWS CloudFormation Language Improvement RFC process owes its inspiration to [AWS CDK's RFC Process](https://github.com/aws/aws-cdk-rfcs)
