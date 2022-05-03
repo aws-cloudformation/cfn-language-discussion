@@ -1,6 +1,6 @@
 # New Intrinsic Function to Convert Template Block to JSON String
 
-* **Original Author(s):**: @michaluk
+* **Original Author(s):**: @mluk-aws
 * **Tracking Issue**: [Tracking Issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/14)
 * **Reviewer**: @cfn-language-and-tools-team
 
