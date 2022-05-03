@@ -51,6 +51,18 @@ MySecret:
                 secretToken: "123"
 ```
 
+### Short Form Syntax
+```
+MySecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+        Name: MySecret
+        SecretString:
+            !ToJsonString:
+                password: "Pa$$word"
+                secretToken: "123"
+```
+
 # Motivation
 
 A CloudFormation user may want to use JSON strings as input to a resource property. For example, `AWS::CloudWatch::Dashboard` requires a JSON string for the `DashboardBody` attribute. A user may even want to use a JSON string as input to attributes where only a general string is required, such as in `SecretString` of `AWS::SecretsManager::Secret`.
@@ -59,10 +71,6 @@ Today, this can only be accomplished through the use of external tools to conver
 
 Open Github request regarding this: https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/78
 
-# Limitation
-
-YAML is a superset of JSON, so there are a few features in YAML that can not be converted to JSON due to their differences. For example, comments are supported in YAML but not JSON. This can potentially be a confusing developer experience if the developer is not aware of these limitations and have different expectations.
-
 # Details
 
 `Fn::ToJsonString` is an intrinsic function that takes in a template block as input and converts it into an escaped JSON string.
@@ -70,6 +78,14 @@ YAML is a superset of JSON, so there are a few features in YAML that can not be 
 * It will be restricted to only be used as the value of string-type resource properties.
 * Intrinsic functions (e.g. `Fn::If`, `Ref`) or pseudo parameters (e.g. `AWS::NoValue`) can be used within the input template block, with the limitation that references can not be made to resource properties. The input template block will be processed by the intrinsic functions and pseudo parameters before it is converted to a string (i.e. the resolved value of the intrinsic function is converted to the output string, and not the intrinsic function itself).
 * Conversion will always retain the same order of key-value pairs such that the converted strings of the same input template block are guaranteed to not change.
+* The following pseudo parameters will be supported:
+    * `AWS::AccountId`, `AWS::Region`, `AWS::Partition`, `AWS::NoValue`
+
+# Limitation
+
+* YAML is a superset of JSON, so there are a few features in YAML that can not be converted to JSON due to their differences. For example, comments are supported in YAML but not JSON. This can potentially be a confusing developer experience if the developer is not aware of these limitations and have different expectations.
+* Unsupported pseudo parameters:
+    * `AWS::StackId`, `AWS::StackName`, `AWS::NotificationArns`, `AWS::URLSuffix`
 
 # FAQ
 * Will the CloudFormation Linter (cfn-lint) support validations regarding Fn::ToJsonString?
@@ -106,3 +122,4 @@ Example of a full template utilizing `Fn::ToJsonString`:
     }
 }
 ```
+
