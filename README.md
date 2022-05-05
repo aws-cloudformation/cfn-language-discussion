@@ -88,8 +88,6 @@ Once CloudFormation Language team picks up the RFC and starts implementation, we
 
 Once Implementation complete, CloudFormation Language team will change status label to `status/done` and close the tracking issue.
 
-TODO
-
 ## Report bugs or suggest features in the CloudFormation Template Language
 
 We welcome you to use the GitHub issue tracker to report bugs or suggest features.
