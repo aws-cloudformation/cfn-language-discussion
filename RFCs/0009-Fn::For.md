@@ -62,10 +62,10 @@ Fn::For requires a list of 4 positional parameters.
     * The collection to iterate on. It should be a List. You can either in-place the collection itself or reference List type parameter values from Parameters section.
 * `TemplateSnippet`
     * The template snippet to replicate for each item in iteration.
-* `LogicalId`
+* (Conditional) `LogicalId`
     * The logical Id of replicated Resource or Output objects.
-    * The value **should be interpolated with an index** using `Fn::Sub` intrinsic function.
     * **This field is only required for usage on a Resource/Output to name replicated Resource/Output objects. Therefore, it should be removed for usage on generating list type value for Resource Property.**
+    * The value **should be interpolated with an index** using `Fn::Sub` intrinsic function.
 
 
 # Examples
