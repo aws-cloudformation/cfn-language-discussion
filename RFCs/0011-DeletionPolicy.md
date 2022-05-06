@@ -2,11 +2,10 @@
 
 * **Original Author(s):**: @mingujo
 * **Tracking Issue**: [Tracking Issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/11)
-* **Reviewer**:  @cfn-language-and-tools-team
 
 # Summary
 
-With Language Extensions, you can use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html) and [Pseudo-Parameter references](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html) to dynamically determine a value for DeletionPolicy and UpdateReplacePolicy Resource attributes
+Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html) and [Pseudo-Parameter references](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html) to dynamically determine a value for DeletionPolicy and UpdateReplacePolicy Resource attributes
 
 # Examples
 
