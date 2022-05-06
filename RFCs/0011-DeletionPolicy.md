@@ -1,4 +1,4 @@
-# Allow Intrinsic Functions and Pseudo-Parameter References in `DeletionPolicy` and  `UpdateReplacePolicy` Resource Attributes
+# Allow Intrinsic Functions and Pseudo-Parameter References in `DeletionPolicy` and  `UpdateReplacePolicy` Resource attributes
 
 * **Original Author(s):**: @mingujo
 * **Tracking Issue**: [Tracking Issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/11)
@@ -6,7 +6,7 @@
 
 # Summary
 
-With Language Extensions, you can use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html) and [Pseudo-Parameter references](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html) to dynamically determine a value for DeletionPolicy and UpdateReplacePolicy Resource Attributes
+With Language Extensions, you can use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html) and [Pseudo-Parameter references](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html) to dynamically determine a value for DeletionPolicy and UpdateReplacePolicy Resource attributes
 
 # Examples
 
@@ -17,19 +17,27 @@ With Language Extensions, you can use CloudFormation [intrinsic functions](https
     "Parameters": {
         "DeletionPolicyParam": {
             "Type": "String",
-            "AllowedValues": ["Delete", "Retain", "Snapshot"]
+            "AllowedValues": ["Delete", "Retain", "Snapshot"],
             "Default": "Delete"
         },
         "UpdateReplacePolicyParam": {
             "Type": "String",
-            "AllowedValues": ["Delete", "Retain", "Snapshot"]
+            "AllowedValues": ["Delete", "Retain", "Snapshot"],
             "Default": "Delete"
         }
     },
     "Resources": {
-        "WaitHandle": {
-            "Type": "AWS::CloudFormation::WaitConditionHandle",
-            "DeletionPolicy": { "Ref": "DeletionPolicyParameter" }
+        "Table": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "KeySchema": [
+               {
+                 "AttributeName" : "primaryKey",
+                 "KeyType" : HASH
+               } 
+              ]
+            },
+            "DeletionPolicy": { "Ref": "DeletionPolicyParameter" },
             "UpdateReplacePolicy": { "Ref": "UpdateReplacePolicyParam" }
         }
     }
@@ -50,8 +58,16 @@ With Language Extensions, you can use CloudFormation [intrinsic functions](https
         "IsProd" : {"Fn::Equals" : [{"Ref" : "Stage"}, "Prod"]},
     },
     "Resources": {
-        "WaitHandle": {
-            "Type": "AWS::CloudFormation::WaitConditionHandle",
+        "Table": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "KeySchema": [
+               {
+                 "AttributeName" : "primaryKey",
+                 "KeyType" : HASH
+               } 
+              ]
+            },
             "DeletionPolicy": { 
                 "Fn::If": [
                     "IsProd",
@@ -102,8 +118,8 @@ With Language Extensions, you can use CloudFormation [intrinsic functions](https
         }
     },
     "Resources": {
-        "WaitHandle": {
-            "Type": "AWS::CloudFormation::WaitConditionHandle",
+        "Bucket": {
+            "Type": "AWS::S3::Bucket",
             "DeletionPolicy": { 
                 "Fn::FindInMap" : [
                     "RegionMap", 
@@ -125,7 +141,7 @@ With Language Extensions, you can use CloudFormation [intrinsic functions](https
 
 # Motivation
 
-CloudFormation customers expect to use conditions and CloudFormation intrinsic functions as a value for a `DeletionPolicy` and `UpdateReplacePolicy` Resource Attributes as they can do elsewhere in the template. Main ask from our customers was to determine values for the policies using conditions based on Parameters. This RFC proposes to support not only such use case but also other intrinsic function usages and Pseudo-parameter references.
+CloudFormation customers expect to use conditions and intrinsic functions as a value for a `DeletionPolicy` and `UpdateReplacePolicy` Resource attributes as they can do elsewhere in the template. Main ask from our customers was to determine values for the policies using conditions based on Parameters. This RFC proposes to support not only such use case but also other intrinsic function usages and Pseudo-parameter references.
 
 * References
     * https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/162 (148 thumbs up)
@@ -150,12 +166,12 @@ If the expression contains references to *[Resource properties](https://docs.aws
 
 
 # FAQ
-* How about other Resource Attributes such as CreationPolicy, DependsOn, Metadata, UpdatePolicy?
+* How about other Resource attributes such as CreationPolicy, DependsOn, Metadata, UpdatePolicy?
     * They are out of scope for now. We will propose to support them in a separate RFC if there is enough demand from community.
 
 
 * Will this be supported by CFN Lint (linter check for CFN template)?
-    * The AWS CloudFormation Linter (cfn-lint) will be updated to validate function and Pseudo-parameter usages under Resource Attributes.
+    * The AWS CloudFormation Linter (cfn-lint) will be updated to validate function and Pseudo-parameter usages under Resource attributes.
 
 # Appendix
 ## More examples
@@ -186,8 +202,16 @@ If the expression contains references to *[Resource properties](https://docs.aws
         }
     },
     "Resources": {
-        "WaitHandle": {
-            "Type": "AWS::CloudFormation::WaitConditionHandle",
+        "Table": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "KeySchema": [
+               {
+                 "AttributeName" : "primaryKey",
+                 "KeyType" : HASH
+               } 
+              ]
+            },
             "DeletionPolicy": { 
                 "Fn::FindInMap" : [
                     "PartitionMap", 
@@ -232,8 +256,8 @@ Mappings:
       DeletionPolicy: Delete
       UpdateReplacePolicy: Delete
 Resources: 
-  WaitHandle: 
-    Type: "AWS::CloudFormation::WaitConditionHandle"
+  Bucket: 
+    Type: "AWS::S3::Bucket"
     DeletionPolicy: !FindInMap [RegionMap, !Ref "AWS::Region", DeletionPolicy]
     UpdateReplacePolicy: !FindInMap [RegionMap, !Ref "AWS::Region", DeletionPolicy]
 ```
@@ -252,8 +276,8 @@ Use `AWS::NoValue`
         "IsProd" : {"Fn::Equals" : [{"Ref" : "Stage"}, "Prod"]},
     },
     "Resources": {
-        "WaitHandle": {
-            "Type": "AWS::CloudFormation::WaitConditionHandle",
+        "Bucket": {
+            "Type": "AWS::S3::Bucket",
             "DeletionPolicy": { 
                 "Fn::If": [
                     "IsProd",
