@@ -1,11 +1,10 @@
-# Language Extensions Intrinsic Function: `Fn::For`
+# New Intrinsic Function for looping: `Fn::For`
 
 * **Original Author(s):**: @mingujo
 * **Tracking Issue**: [Tracking Issue: Fn::For](https://github.com/aws-cloudformation/cfn-language-discussion/issues/9)
-* **Reviewer**: @cfn-language-and-tools-team
 
 # Summary
-With Language Extensions `Fn::For` intrinsic function, you can iterate a given list to replicate a certain template snippet thereby avoiding repetitively writing a similar declaration for each object (e.g. Resource, Output, or Resource Properties) just like using a loop idiom in any programming languages.
+We introduce `Fn::For` intrinsic function. You can iterate a given list to replicate a certain template snippet thereby avoiding repetitively writing a similar declaration for each object (e.g. Resource, Output, or Resource Properties) just like using a loop idiom in any programming languages.
 
 `Fn::For` traverses a single given List of Strings from first to last, and over each iteration, it references each item under a given template snippet to be replicated.
 
