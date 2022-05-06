@@ -2,11 +2,10 @@
 
 * **Original Author(s):**: @mluk-aws
 * **Tracking Issue**: [Tracking Issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/14)
-* **Reviewer**: @cfn-language-and-tools-team
 
 # Summary
 
-As part of Language Extensions, we will support an intrinsic function called `Fn::ToJsonString` that enables developers to convert a template block into an escaped JSON string, which can be used as input values to string-type properties of CloudFormation resources.
+We will support an intrinsic function called `Fn::ToJsonString` that enables developers to convert a template block into an escaped JSON string, which can be used as input values to string-type properties of CloudFormation resources.
 
 # Examples
 
