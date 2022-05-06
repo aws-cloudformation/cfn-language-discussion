@@ -3,6 +3,16 @@
 ## What is it?
 This repo is a place to propose and discuss new language features for the CloudFormation template language. It is also a great place to request CloudFormation template language features, report CloudFormation template language bugs or any general discussion related to the CloudFormation template language.
 
+Go to: [What is an RFC](#what-is-an-rfc) | [RFC Process](#rfc-process)
+
+<!--BEGIN_TABLE-->
+\#|Title|Owner|Status|
+---|-----|-----|------|
+[9](https://github.com/aws-cloudformation/cfn-language-discussion/issues/9)|[Adding looping functionality in CFN Template](https://github.com/aws-cloudformation/cfn-language-discussion/pull/19)|[@MalikAtalla-AWS](https://github.com/MalikAtalla-AWS)|✍️ review
+[14](https://github.com/aws-cloudformation/cfn-language-discussion/issues/14)|[Convert Template Block to JSON String](https://github.com/aws-cloudformation/cfn-language-discussion/pull/15)|[@mluk-aws](https://github.com/mluk-aws)|✍️ review
+[11](https://github.com/aws-cloudformation/cfn-language-discussion/issues/11)|[Allow Intrinsic Functions and Pseudo-Parameter References in DeletionPolicy and UpdateReplacePolicy](https://github.com/aws-cloudformation/cfn-language-discussion/pull/21)|[@MalikAtalla-AWS](https://github.com/MalikAtalla-AWS)|✍️ review
+<!--END_TABLE-->
+
 ## What is an RFC?
 
 An RFC (request for comment) is a text document proposing a change to the CloudFormation template language. RFCs will only contain customer-facing syntax and behavior, not implementation details, and while we welcome all customer feedback on the proposal, the CloudFormation team will have final authority on decisions around the proposal.
@@ -23,8 +33,8 @@ An RFC can be submitted by anyone. In most cases, RFCs are authored by CloudForm
 
 ### 1. Tracking issue
 
-Each RFC starts with a tracking issue. This issue is the hub for conversation,
-community signal(+1s) and a unique identifier for the RFC. (TODO: Add a link to tracking issue template)
+Each RFC starts with a [tracking issue](.github/ISSUE_TEMPLATE/rfc_tracking_issue.md). This issue is the hub for conversation,
+community signal(+1s) and a unique identifier for the RFC.
 
 > Before creating any issue, please make sure there are no similar issues in issue list or RFCs in RFC table.
 
