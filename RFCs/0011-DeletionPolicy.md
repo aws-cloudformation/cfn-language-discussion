@@ -123,14 +123,14 @@ With Language Extensions, you can use CloudFormation [intrinsic functions](https
             "DeletionPolicy": { 
                 "Fn::FindInMap" : [
                     "RegionMap", 
-                    {"Ref" : "AWS::Region" },
+                    { "Ref" : "AWS::Region" },
                     "DeletionPolicy"
                 ]
             },
             "UpdateReplacePolicy": { 
                 "Fn::FindInMap" : [
                     "RegionMap", 
-                    {"Ref" : "AWS::Region" },
+                    { "Ref" : "AWS::Region" },
                     "UpdateReplacePolicy"
                 ]
             }
@@ -141,7 +141,8 @@ With Language Extensions, you can use CloudFormation [intrinsic functions](https
 
 # Motivation
 
-CloudFormation customers expect to use conditions and intrinsic functions as a value for a `DeletionPolicy` and `UpdateReplacePolicy` Resource attributes as they can do elsewhere in the template. Main ask from our customers was to determine values for the policies using conditions based on Parameters. This RFC proposes to support not only such use case but also other intrinsic function usages and Pseudo-parameter references.
+CloudFormation customers expect to use conditions and intrinsic functions as a value for a `DeletionPolicy` and `UpdateReplacePolicy` Resource attributes as they can do elsewhere in the template.
+Main ask from our customers was to allow them to vary DeletionPolicy and UpdateReplacePolicy values based on development stage, which tends to be passed in as a parameter, e.g., allow resource deletion in Dev stages but not Prod. This RFC proposes to support not only such use case but also other intrinsic function usages and Pseudo-parameter references.
 
 * References
     * https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/162 (148 thumbs up)
@@ -155,19 +156,18 @@ CloudFormation customers expect to use conditions and intrinsic functions as a v
 
 
 * Following Pseudo-Parameters references will be supported
-    * `AWS::AccountId`, `AWS::Region`, `AWS::Partition`, `AWS::NoValue`
+    * `AWS::AccountId`, `AWS::Region`, `AWS::Partition`
 
 # Limitation
 
-If the expression contains references to *[Resource properties](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)* or *certain pseudo parameters*, Language Extensions will not be able to resolve the expression.
-
+Does not support expressions containing references to *[Resource properties](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)* or *certain pseudo parameters*
 * Unsupported Pseudo-Parameter References
-    * `AWS::StackId`, `AWS::StackName`, `AWS::NotificationArns`, `AWS::URLSuffix`
+    * `AWS::StackId`, `AWS::StackName`, `AWS::NotificationArns`, `AWS::URLSuffix`, `AWS::NoValue`
 
 
 # FAQ
 * How about other Resource attributes such as CreationPolicy, DependsOn, Metadata, UpdatePolicy?
-    * They are out of scope for now. We will propose to support them in a separate RFC if there is enough demand from community.
+    * They are out of scope of this RFC.
 
 
 * Will this be supported by CFN Lint (linter check for CFN template)?
@@ -215,14 +215,14 @@ If the expression contains references to *[Resource properties](https://docs.aws
             "DeletionPolicy": { 
                 "Fn::FindInMap" : [
                     "PartitionMap", 
-                    {"Ref" : "AWS::Partition"},
+                    { "Ref" : "AWS::Partition" },
                     "DeletionPolicy"
                 ]
             },
             "UpdateReplacePolicy": { 
                 "Fn::FindInMap" : [
                     "PartitionMap", 
-                    {"Ref" : "AWS::Partition" },
+                    { "Ref" : "AWS::Partition" },
                     "UpdateReplacePolicy"
                 ]
             }
@@ -260,32 +260,4 @@ Resources:
     Type: "AWS::S3::Bucket"
     DeletionPolicy: !FindInMap [RegionMap, !Ref "AWS::Region", DeletionPolicy]
     UpdateReplacePolicy: !FindInMap [RegionMap, !Ref "AWS::Region", DeletionPolicy]
-```
-
-Use `AWS::NoValue`
-```
-{
-    "AWSTemplateFormatVersion" : "2010-09-09",
-    "Parameters": {
-        "Stage": {
-            "Type": "String",
-            "AllowedValues": ["Prod", "Staging", "Dev"]
-        }
-    },
-    "Conditions": {
-        "IsProd" : {"Fn::Equals" : [{"Ref" : "Stage"}, "Prod"]},
-    },
-    "Resources": {
-        "Bucket": {
-            "Type": "AWS::S3::Bucket",
-            "DeletionPolicy": { 
-                "Fn::If": [
-                    "IsProd",
-                    "Retain",
-                    {"Ref": "AWS::NoValue"}
-                ]
-            }
-        }
-    }
-}
 ```
