@@ -64,7 +64,7 @@ Fn::For requires a list of 4 positional parameters.
     * The template snippet to replicate for each item in iteration.
 * (Conditional) `LogicalId`
     * The logical Id of replicated Resource or Output objects.
-    * **This field is only required for usage on a Resource/Output to name replicated Resource/Output objects. Therefore, it should be removed for usage on generating list type value for Resource Property.**
+    * **This field is only required for usage on a Resource/Output to name replicated Resource/Output objects. It should not be specified when using Fn::For to generate a list type attribute for a Resource Property.**
     * The value **should be interpolated with an index** using `Fn::Sub` intrinsic function.
 
 
@@ -116,7 +116,7 @@ Fn::For requires a list of 4 positional parameters.
               ImageId: !Ref x
           - !Sub Instance${i}
     ```
-* Processed template (You are able to check your processed template using GetTemplate API or directly on Console)
+* Above templates are equivalent to a below template in Yaml
     ```
     AWSTemplateFormatVersion: '2010-09-09'
     Description: "EC2 Instances with different AMIs"
@@ -204,7 +204,7 @@ Fn::For requires a list of 4 positional parameters.
                 VpcId: !Ref Vpc${i}
             - !Sub Subnet${i}
     ```
-* Processed template
+* Above templates are equivalent to a below template in Yaml
     ```
     AWSTemplateFormatVersion: '2010-09-09'
     Description: "EC2 Instances with different AMIs"
@@ -286,7 +286,7 @@ Fn::For requires a list of 4 positional parameters.
               - !Ref InstanceIpv6Address 
               - Ipv6Address: !Ref x
     ```
-* Processed template
+* Above templates are equivalent to a below template in Yaml
     ```
     AWSTemplateFormatVersion: '2010-09-09'
     Description: "EC2 Instances with Ipv6Addresses"
@@ -413,7 +413,7 @@ Fn::For requires a list of 4 positional parameters.
                 - PrivateIp
           - !Sub PrivateIp${i}
     ```
-* Processed template
+* Above templates are equivalent to a below template in Yaml
     ```
     AWSTemplateFormatVersion: '2010-09-09'
     Description: "AutoScaling LaunchConfiguration"
@@ -527,7 +527,7 @@ Fn::For requires a list of 4 positional parameters.
         Description: "Private ip for Instance1"
         Value: !GetAtt Instance1.PrivateIp
     ```
-* Processed template
+* Above templates are equivalent to a below template in Yaml
     ```
     AWSTemplateFormatVersion: '2010-09-09'
     Description: "AutoScaling LaunchConfiguration"
@@ -678,7 +678,7 @@ Fn::For requires a list of 4 positional parameters.
                   - Ipv6Address: !Ref x2
           - !Sub Instance${i1}
     ```
-* Processed template
+* Above templates are equivalent to a below template
     ```
         Parameters:
           Stages:
@@ -742,7 +742,7 @@ Fn::For requires a list of 4 positional parameters.
                             Value: !Sub "${x2}"
                   - !Sub Instance${i1}
     ```
-* Processed template
+* Above templates are equivalent to a below template
     ```
     Parameters:
       Stages:
