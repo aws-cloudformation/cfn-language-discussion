@@ -12,10 +12,8 @@ Short description of the proposed feature.
 ## Checklist
 
 - [x] Tracking issue created (label: `status/proposed`)
-- [ ] Reviewers assigned (reach out to us via [#cfn-language-discussion](cfn-language-discussion@amazon.com) if needed)
-- [ ] Kick off meeting
-- [ ] RFC pull request submitted (label: `status/review`)
-- [ ] Community reach out (via Slack and/or Twitter)
+- [ ] RFC pull request submitted 
+- [ ] Reviewers assigned (label: `status/review`)
 - [ ] Reviewers signed-off (label `approved` applied to pull request)
 - [ ] Final comments period (label: `status/final-comments-period`)
 - [ ] Approved and merged (label: `status/approved`)
