@@ -33,32 +33,14 @@ An RFC can be submitted by anyone. In most cases, RFCs are authored by CloudForm
 
 ### 1. Tracking issue
 
-Each RFC starts with a [tracking issue](.github/ISSUE_TEMPLATE/rfc_tracking_issue.md). This issue is the hub for conversation,
-community signal(+1s) and a unique identifier for the RFC.
+Each RFC starts with a [tracking issue](.github/ISSUE_TEMPLATE/rfc_tracking_issue.md). This issue is the hub for conversation, community signal(+1s) and a unique identifier for the RFC. CloudFormation team members will comment on the issue to help clarify problems, stablize syntax and make sure no breaking changes are introduced. The goal of this discussion to make sure there is no major disagreenment on high-level proposal.
 
 > Before creating any issue, please make sure there are no similar issues in issue list or RFCs in RFC table.
 
 The tracking issue includes a checklist helps the RFC owner drive the RFC
 throughout the process.
 
-### 2. Reviewer
-
-Reach out to [cfn-language-discussion#](cfn-language-discussion@amazon.com) to get **TWO** reviewers.
-
-For each RFC, CloudFormation leadership will assign 2 reviewers who will review
-and approve the CloudFormation language RFC. An RFC will not be considered approved
-unless both reviewers approve.
-
-### 3. Kick off
-
-Before diving into writing the RFC, it is highly recommended having a kick-off
-meeting which include reviewers and some stakeholders who might be interested in
-this RFC or can contribute ideas and direction. The goal of this meeting is to
-have a preliminary discussion of the proposal: does it have breaking changes?
-What is the scope of this proposal? Can this new feature be part of an existing RFC?
-
-
-### 4. RFC Document
+### 2. RFC Document
 
 Now you can start drafting your RFC document itself.
 
@@ -66,35 +48,31 @@ Create a file under `RFCs/NNNN-my-feature` based on the template under
 `0000-template.md`, where `NNNN` is your tracking issue number and `my-feature`
 is descriptive. Follow the template which includes guidance on completing the RFC.
 
-### 5. Feedback
+### 3. Feedback
 
 Once you have your initial draft of your RFC ready, please submit as a pull
-request and start collecting feedback.
+request and start collecting feedback. CloudFormation team will assign two reviewers within 5 business days.
 
-Contact [#cfn-language-discussion](cfn-language-discussion@amazon.com) and
-reach out to the public via various channels, Twitter and other relevant forums.
-Also make sure RFC reviewers assigned are notified so they can provide their feedback.
-
-### 6. Sign-off
+### 4. Sign-off
 
 Before you can merge your RFC, you will need both reviewers sign-off on the RFC.
 
 Once signed off, reviewers will add `status/approved` label to the RFC pull request.
 
 
-### 7. Final Comments Period
+### 5. Final Comments Period
 
 At this stage, you have reached consensus about the majority concerns/questions
 brought up during review period. This is a period for the broader community to
 get a chance to look into this RFC, which usually takes about a week. If no
 major concerns are raised, your pull request is ready to be merged.
 
-### 8. Implementation
+### 6. Implementation
 
 Once CloudFormation Language team picks up the RFC and starts implementation, we will update the tracking issue accordingly
 - Started implementation (label: `status/implementing`)
 
-### 9. Complete
+### 7. Complete
 
 Once Implementation complete, CloudFormation Language team will change status label to `status/done` and close the tracking issue.
 

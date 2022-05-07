@@ -38,9 +38,9 @@ If you think you’ve found a potential security issue, please do not post it in
 What goes wrong? Please describe the issue in as much detail as possible.
 
 
-### **Expected behaviour**
+### **Expected behavior**
 
-### **Oberserved behaviour**
+### **Observed behavior**
 
 ### **Test cases**
 
