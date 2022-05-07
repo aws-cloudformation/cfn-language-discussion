@@ -33,16 +33,16 @@ An RFC can be submitted by anyone. In most cases, RFCs are authored by CloudForm
 
 ### 1. Tracking issue
 
-Each RFC starts with a [tracking issue](.github/ISSUE_TEMPLATE/rfc_tracking_issue.md). This issue is the hub for conversation, community signal(+1s) and a unique identifier for the RFC. CloudFormation team members will comment on the issue to help clarify problems, stablize syntax and make sure no breaking changes are introduced. The goal of this discussion to make sure there is no major disagreenment on high-level proposal.
+Each RFC starts with a [tracking issue](.github/ISSUE_TEMPLATE/rfc_tracking_issue.md). This issue is the hub for conversation, community signal (+1s) and a unique identifier for the RFC. CloudFormation team members will comment on the issue to help clarify problems, stablize syntax and make sure no breaking changes are introduced. The goal of this discussion to make sure there is no major disagreenment on high-level proposal.
 
-> Before creating any issue, please make sure there are no similar issues in issue list or RFCs in RFC table.
+> Before creating any issue, please make sure there are no similar issues in the issue list or RFCs in the RFC table.
 
-The tracking issue includes a checklist helps the RFC owner drive the RFC
+The tracking issue includes a checklist which helps the RFC owner drive the RFC
 throughout the process.
 
 ### 2. RFC Document
 
-Now you can start drafting your RFC document itself.
+Now you can start drafting the RFC document itself.
 
 Create a file under `RFCs/NNNN-my-feature` based on the template under
 `0000-template.md`, where `NNNN` is your tracking issue number and `my-feature`
@@ -50,31 +50,31 @@ is descriptive. Follow the template which includes guidance on completing the RF
 
 ### 3. Feedback
 
-Once you have your initial draft of your RFC ready, please submit as a pull
-request and start collecting feedback. CloudFormation team will assign two reviewers within 5 business days.
+Once you have the initial draft of your RFC ready, please submit it as a pull
+request and start collecting feedback. The CloudFormation team will assign two reviewers within 5 business days.
 
 ### 4. Sign-off
 
-Before you can merge your RFC, you will need both reviewers sign-off on the RFC.
+Before you can merge your RFC, you will need both reviewers to sign off on the RFC.
 
-Once signed off, reviewers will add `status/approved` label to the RFC pull request.
+Once signed off, reviewers will add the `status/approved` label to the RFC pull request.
 
 
 ### 5. Final Comments Period
 
 At this stage, you have reached consensus about the majority concerns/questions
-brought up during review period. This is a period for the broader community to
+brought up during the review period. This is a period for the broader community to
 get a chance to look into this RFC, which usually takes about a week. If no
 major concerns are raised, your pull request is ready to be merged.
 
 ### 6. Implementation
 
-Once CloudFormation Language team picks up the RFC and starts implementation, we will update the tracking issue accordingly
+Once the CloudFormation Language team picks up the RFC and starts implementation, we will update the tracking issue accordingly
 - Started implementation (label: `status/implementing`)
 
 ### 7. Complete
 
-Once Implementation complete, CloudFormation Language team will change status label to `status/done` and close the tracking issue.
+Once Implementation is complete, the CloudFormation Language team will change the status label to `status/done` and close the tracking issue.
 
 ## Report bugs or suggest features in the CloudFormation Template Language
 
@@ -86,7 +86,7 @@ Please use the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md) for r
 
 ## Security
 
-If you discover a potential security issue in this project we ask that you notify AWS/Amazon Security via our [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public github issue.
+If you discover a potential security issue in this project we ask that you notify AWS Security via our [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public github issue.
 
 ## License
 
