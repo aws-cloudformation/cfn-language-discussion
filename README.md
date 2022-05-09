@@ -17,17 +17,9 @@ Go to: [What is an RFC](#what-is-an-rfc) | [RFC Process](#rfc-process)
 
 An RFC (request for comment) is a text document proposing a change to the CloudFormation template language. RFCs will only contain customer-facing syntax and behavior, not implementation details, and while we welcome all customer feedback on the proposal, the CloudFormation team will have final authority on decisions around the proposal.
 
-### When should I write an RFC?
-
-You will need to draft an RFC when you propose a new language feature in the CloudFormation template language. Examples are:
-
-   - New intrinsic functions
-   - New parameter types
-   - New functionality for an existing intrinsic funtion.
-
 ### Who should submit an RFC?
 
-An RFC can be submitted by anyone. In most cases, RFCs are authored by CloudFormation team members, but contributors are more than welcome to submit RFCs as well. However, RFCs can be a bit formal and time-consuming, so we highly recommend first creating an issue to discuss a new language feature proposal at a high level before diving into writing a detailed RFC document for it.
+In general, anyone can submit RFCs, but it can be a time-consuming process, so we recommend that the community submit [feature requests](.github/ISSUE_TEMPLATE/feature_request.md) to discuss the proposal at a high level. The CloudFormation team can then gather all the community feedback in feature requests to formulate the RFCs.
 
 ## RFC Process
 
