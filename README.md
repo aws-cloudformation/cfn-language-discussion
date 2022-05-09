@@ -25,7 +25,7 @@ In general, anyone can submit RFCs, but it can be a time-consuming process, so w
 
 ### 1. Tracking issue
 
-Each RFC starts with a [tracking issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=rfc_tracking_issue.md&title=). This issue is the hub for conversation, community signal (+1s) and a unique identifier for the RFC. CloudFormation team members will comment on the issue to help clarify problems, stablize syntax and make sure no breaking changes are introduced. The goal of this discussion to make sure there is no major disagreenment on high-level proposal.
+Each RFC starts with a [tracking issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=rfc_tracking_issue.md&title=). This issue is the hub for conversation, community signal (+1s) and a unique identifier for the RFC. CloudFormation team members will comment on the issue to help clarify problems, stabilize syntax and make sure no breaking changes are introduced. The goal of this discussion is to make sure there is no major disagreement on the high-level proposal.
 
 > Before creating any issue, please make sure there are no similar issues in the issue list or RFCs in the RFC table.
 
