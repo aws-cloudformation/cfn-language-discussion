@@ -17,23 +17,15 @@ Go to: [What is an RFC](#what-is-an-rfc) | [RFC Process](#rfc-process)
 
 An RFC (request for comment) is a text document proposing a change to the CloudFormation template language. RFCs will only contain customer-facing syntax and behavior, not implementation details, and while we welcome all customer feedback on the proposal, the CloudFormation team will have final authority on decisions around the proposal.
 
-### When should I write an RFC?
-
-You will need to draft an RFC when you propose a new language feature in the CloudFormation template language. Examples are:
-
-   - New intrinsic functions
-   - New parameter types
-   - New functionality for an existing intrinsic funtion.
-
 ### Who should submit an RFC?
 
-An RFC can be submitted by anyone. In most cases, RFCs are authored by CloudFormation team members, but contributors are more than welcome to submit RFCs as well. However, RFCs can be a bit formal and time-consuming, so we highly recommend first creating an issue to discuss a new language feature proposal at a high level before diving into writing a detailed RFC document for it.
+In general, anyone can submit RFCs, but it can be a time-consuming process, so we recommend that the community submit [feature requests](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=feature_request.md&title=) to discuss the proposal at a high level. The CloudFormation team can then gather all the community feedback in feature requests to formulate the RFCs.
 
 ## RFC Process
 
 ### 1. Tracking issue
 
-Each RFC starts with a [tracking issue](.github/ISSUE_TEMPLATE/rfc_tracking_issue.md). This issue is the hub for conversation, community signal (+1s) and a unique identifier for the RFC. CloudFormation team members will comment on the issue to help clarify problems, stablize syntax and make sure no breaking changes are introduced. The goal of this discussion to make sure there is no major disagreenment on high-level proposal.
+Each RFC starts with a [tracking issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=rfc_tracking_issue.md&title=). This issue is the hub for conversation, community signal (+1s) and a unique identifier for the RFC. CloudFormation team members will comment on the issue to help clarify problems, stablize syntax and make sure no breaking changes are introduced. The goal of this discussion to make sure there is no major disagreenment on high-level proposal.
 
 > Before creating any issue, please make sure there are no similar issues in the issue list or RFCs in the RFC table.
 
@@ -82,7 +74,7 @@ We welcome you to use the GitHub issue tracker to report bugs or suggest feature
 
 When filing an issue, please check existing open or recently closed issues to make sure somebody else hasn't already reported the issue. 
 
-Please use the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md) for reporting bugs and the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md) for requesting new features.
+Please use the [bug report template](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=bug_report.md&title=) for reporting bugs and the [feature request template](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=feature_request.md&title=) for requesting new features.
 
 ## Security
 
