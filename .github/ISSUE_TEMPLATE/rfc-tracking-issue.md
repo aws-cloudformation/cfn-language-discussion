@@ -1,6 +1,6 @@
 ---
-name: ''
-about: ''
+name: RFC tracking issue
+about: Tracking issue for an RFC
 title: ''
 labels: ''
 assignees: ''
