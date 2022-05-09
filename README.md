@@ -19,13 +19,13 @@ An RFC (request for comment) is a text document proposing a change to the CloudF
 
 ### Who should submit an RFC?
 
-In general, anyone can submit RFCs, but it can be a time-consuming process, so we recommend that the community submit [feature requests](.github/ISSUE_TEMPLATE/feature_request.md) to discuss the proposal at a high level. The CloudFormation team can then gather all the community feedback in feature requests to formulate the RFCs.
+In general, anyone can submit RFCs, but it can be a time-consuming process, so we recommend that the community submit [feature requests](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=feature_request.md&title=) to discuss the proposal at a high level. The CloudFormation team can then gather all the community feedback in feature requests to formulate the RFCs.
 
 ## RFC Process
 
 ### 1. Tracking issue
 
-Each RFC starts with a [tracking issue](.github/ISSUE_TEMPLATE/rfc_tracking_issue.md). This issue is the hub for conversation, community signal (+1s) and a unique identifier for the RFC. CloudFormation team members will comment on the issue to help clarify problems, stablize syntax and make sure no breaking changes are introduced. The goal of this discussion to make sure there is no major disagreenment on high-level proposal.
+Each RFC starts with a [tracking issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=rfc_tracking_issue.md&title=). This issue is the hub for conversation, community signal (+1s) and a unique identifier for the RFC. CloudFormation team members will comment on the issue to help clarify problems, stablize syntax and make sure no breaking changes are introduced. The goal of this discussion to make sure there is no major disagreenment on high-level proposal.
 
 > Before creating any issue, please make sure there are no similar issues in the issue list or RFCs in the RFC table.
 
@@ -74,7 +74,7 @@ We welcome you to use the GitHub issue tracker to report bugs or suggest feature
 
 When filing an issue, please check existing open or recently closed issues to make sure somebody else hasn't already reported the issue. 
 
-Please use the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md) for reporting bugs and the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md) for requesting new features.
+Please use the [bug report template](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=bug_report.md&title=) for reporting bugs and the [feature request template](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=feature_request.md&title=) for requesting new features.
 
 ## Security
 

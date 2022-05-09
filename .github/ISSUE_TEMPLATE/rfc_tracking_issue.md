@@ -1,6 +1,6 @@
 ---
-Name: "RFC Tracking Issue"
-About: "Tracking issue for an RFC"
+Name: RFC Tracking Issue
+About: Tracking issue for an RFC
 Title: proposal title
 Labels: management/tracking, status/proposed
 ---
