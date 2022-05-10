@@ -1,8 +1,8 @@
 ---
-name: 
-about: 
-title: 
-labels: ''
+name: RFC tracking issue
+about: Tracking issue for an RFC
+title: ''
+labels: management/tracking, status/proposed
 assignees: ''
 
 ---
