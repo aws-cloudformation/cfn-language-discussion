@@ -1,8 +1,10 @@
 ---
-Name: RFC Tracking Issue
-About: Tracking issue for an RFC
-Title: proposal title
-Labels: management/tracking, status/proposed
+name: RFC tracking issue
+about: Tracking issue for an RFC
+title: ''
+labels: management/tracking, status/proposed
+assignees: ''
+
 ---
 
 ## Description
