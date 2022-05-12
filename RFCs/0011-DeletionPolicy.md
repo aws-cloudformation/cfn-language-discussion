@@ -10,7 +10,7 @@ Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFor
 # Examples
 
 ### Use [Ref](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-ref.html)
-```
+```json
 {
     "AWSTemplateFormatVersion" : "2010-09-09",
     "Parameters": {
@@ -32,7 +32,7 @@ Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFor
               "KeySchema": [
                {
                  "AttributeName" : "primaryKey",
-                 "KeyType" : HASH
+                 "KeyType" : "HASH"
                } 
               ]
             },
@@ -43,8 +43,8 @@ Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFor
 }
 ```
 
-### Use [Conditions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/conditions-section-structure.html) and [Fn::If](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-condition.html) based on Parameters
-```
+### Use [Conditions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/conditions-section-structure.html) and [Fn::If](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-conditions.html#intrinsic-function-reference-conditions-if) based on Parameters
+```json
 {
     "AWSTemplateFormatVersion" : "2010-09-09",
     "Parameters": {
@@ -54,7 +54,7 @@ Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFor
         }
     },
     "Conditions": {
-        "IsProd" : {"Fn::Equals" : [{"Ref" : "Stage"}, "Prod"]},
+        "IsProd" : {"Fn::Equals" : [{"Ref" : "Stage"}, "Prod"]}
     },
     "Resources": {
         "Table": {
@@ -63,23 +63,15 @@ Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFor
               "KeySchema": [
                {
                  "AttributeName" : "primaryKey",
-                 "KeyType" : HASH
-               } 
+                 "KeyType" : "HASH"
+               }
               ]
             },
-            "DeletionPolicy": { 
-                "Fn::If": [
-                    "IsProd",
-                    "Retain",
-                    "Delete"
-                ]
+            "DeletionPolicy": {
+                "Fn::If": [ "IsProd", "Retain", "Delete" ]
             },
-            "UpdateReplacePolicy": { 
-                "Fn::If": [
-                    "IsProd",
-                    "Retain",
-                    "Delete"
-                ]
+            "UpdateReplacePolicy": {
+                "Fn::If": [ "IsProd", "Retain", "Delete" ]
             }
         }
     }
@@ -87,7 +79,7 @@ Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFor
 ```
 
 ### Use [Fn::FindInMap](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-findinmap.html) and `AWS::Region` Pseudo-Parameter
-```
+```json
 {
     "AWSTemplateFormatVersion" : "2010-09-09",
     "Parameters": {
@@ -98,19 +90,19 @@ Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFor
     },
     "Mappings" : {
         "RegionMap" : {
-            "us-east-1" : { 
+            "us-east-1" : {
                 "DeletionPolicy": "Retain",
                 "UpdateReplacePolicy": "Retain"
             },
-            "us-west-1" : { 
+            "us-west-1" : {
                 "DeletionPolicy": "Delete",
                 "UpdateReplacePolicy": "Delete"
             },
-            "eu-west-1" : { 
+            "eu-west-1" : {
                 "DeletionPolicy": "Retain",
                 "UpdateReplacePolicy": "Delete"
             },
-            "ap-southeast-1" : { 
+            "ap-southeast-1" : {
                 "DeletionPolicy": "Delete",
                 "UpdateReplacePolicy": "Delete"
             }
@@ -119,16 +111,16 @@ Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFor
     "Resources": {
         "Bucket": {
             "Type": "AWS::S3::Bucket",
-            "DeletionPolicy": { 
+            "DeletionPolicy": {
                 "Fn::FindInMap" : [
-                    "RegionMap", 
+                    "RegionMap",
                     { "Ref" : "AWS::Region" },
                     "DeletionPolicy"
                 ]
             },
-            "UpdateReplacePolicy": { 
+            "UpdateReplacePolicy": {
                 "Fn::FindInMap" : [
-                    "RegionMap", 
+                    "RegionMap",
                     { "Ref" : "AWS::Region" },
                     "UpdateReplacePolicy"
                 ]
@@ -140,27 +132,29 @@ Use CloudFormation [intrinsic functions](https://docs.aws.amazon.com/AWSCloudFor
 
 # Motivation
 
-CloudFormation customers expect to use conditions and intrinsic functions as a value for a `DeletionPolicy` and `UpdateReplacePolicy` Resource attributes as they can do elsewhere in the template.
-Main ask from our customers was to allow them to vary DeletionPolicy and UpdateReplacePolicy values based on development stage, which tends to be passed in as a parameter, e.g., allow resource deletion in Dev stages but not Prod. This RFC proposes to support not only such use case but also other intrinsic function usages and Pseudo-parameter references.
+CloudFormation customers expect to use conditions and intrinsic functions as values for `DeletionPolicy` and `UpdateReplacePolicy` Resource attributes as they can do elsewhere in the template.
+The main ask from our customers was to allow them to vary DeletionPolicy and UpdateReplacePolicy values based on development stage, which tends to be passed in as a parameter, e.g., allow resource deletion in Dev stages but not Prod. This RFC proposes to support not only such use case but also other intrinsic function usages and Pseudo-parameter references.
 
 * References
-    * https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/162 (148 thumbs up)
+    * https://github.com/aws-cloudformation/cfn-language-discussion/issues/58 (149 thumbs up)
     * https://github.com/aws/aws-cli/issues/3825
 
 # Details
-* Following intrinsic functions will be supported.
+* The following intrinsic functions will be supported.
     * [Ref](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-ref.html)
     * [Fn::FindInMap](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-findinmap.html)
     * [Fn::If](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-conditions.html#intrinsic-function-reference-conditions-if)
 
 
-* Following Pseudo-Parameters references will be supported
+* The following Pseudo-Parameters will be supported
     * `AWS::AccountId`, `AWS::Region`, `AWS::Partition`
 
 # Limitation
 
+**Note:** This limitation is due to underlying implementation constraints. In the fullness of time, this limitation should be removed.
+
 Does not support expressions containing references to *[Resource properties](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)* or *certain pseudo parameters*
-* Unsupported Pseudo-Parameter References
+* Unsupported Pseudo-Parameters
     * `AWS::StackId`, `AWS::StackName`, `AWS::NotificationArns`, `AWS::URLSuffix`, `AWS::NoValue`
 
 
@@ -175,7 +169,7 @@ Does not support expressions containing references to *[Resource properties](htt
 # Appendix
 ## More examples
 ### Use [Fn::FindInMap](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-findinmap.html) and  `AWS::Partition`
-```
+```json
 {
     "AWSTemplateFormatVersion" : "2010-09-09",
     "Parameters": {
@@ -186,15 +180,15 @@ Does not support expressions containing references to *[Resource properties](htt
     },
     "Mappings" : {
         "PartitionMap" : {
-            "aws" : { 
+            "aws" : {
                 "DeletionPolicy": "Retain",
                 "UpdateReplacePolicy": "Retain"
             },
-            "aws-cn" : { 
+            "aws-cn" : {
                 "DeletionPolicy": "Delete",
                 "UpdateReplacePolicy": "Delete"
             },
-            "aws-us-gov" : { 
+            "aws-us-gov" : {
                 "DeletionPolicy": "Retain",
                 "UpdateReplacePolicy": "Delete"
             }
@@ -207,20 +201,20 @@ Does not support expressions containing references to *[Resource properties](htt
               "KeySchema": [
                {
                  "AttributeName" : "primaryKey",
-                 "KeyType" : HASH
-               } 
+                 "KeyType" : "HASH"
+               }
               ]
             },
-            "DeletionPolicy": { 
+            "DeletionPolicy": {
                 "Fn::FindInMap" : [
-                    "PartitionMap", 
+                    "PartitionMap",
                     { "Ref" : "AWS::Partition" },
                     "DeletionPolicy"
                 ]
             },
-            "UpdateReplacePolicy": { 
+            "UpdateReplacePolicy": {
                 "Fn::FindInMap" : [
-                    "PartitionMap", 
+                    "PartitionMap",
                     { "Ref" : "AWS::Partition" },
                     "UpdateReplacePolicy"
                 ]
@@ -231,7 +225,7 @@ Does not support expressions containing references to *[Resource properties](htt
 ```
 
 ### Use [Fn::FindInMap](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-findinmap.html) and `AWS::Region` Pseudo-Parameter in YAML
-```
+```yaml
 AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   Stage:
@@ -240,8 +234,8 @@ Parameters:
       - Prod
       - Staging
       - Dev
-Mappings: 
-  RegionMap: 
+Mappings:
+  RegionMap:
     us-east-1:
       DeletionPolicy: Retain
       UpdateReplacePolicy: Retain
@@ -254,8 +248,8 @@ Mappings:
     ap-northeast-1:
       DeletionPolicy: Delete
       UpdateReplacePolicy: Delete
-Resources: 
-  Bucket: 
+Resources:
+  Bucket:
     Type: "AWS::S3::Bucket"
     DeletionPolicy: !FindInMap [RegionMap, !Ref "AWS::Region", DeletionPolicy]
     UpdateReplacePolicy: !FindInMap [RegionMap, !Ref "AWS::Region", DeletionPolicy]
