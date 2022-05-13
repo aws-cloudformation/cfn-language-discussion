@@ -22,7 +22,7 @@ Here is an example of a resource containing a string-type property using a JSON 
 With the new `Fn::ToJsonString` intrinsic function we can simplify to the following:
 
 ## JSON
-```
+```json
 "MyDashboard": {
     "Type": "AWS::CloudWatch::Dashboard",
     "Properties": {
