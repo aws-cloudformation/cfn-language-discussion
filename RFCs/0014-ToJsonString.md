@@ -66,7 +66,7 @@ MyDashboard:
 ```
 
 ### Short Form Syntax
-```
+```yaml
 MyDashboard:
     Type: AWS::CloudWatch::Dashboard
     Properties:
