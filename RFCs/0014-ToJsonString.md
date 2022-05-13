@@ -7,6 +7,14 @@
 
 We will support an intrinsic function called `Fn::ToJsonString` that enables developers to convert a template block into an escaped JSON string, which can be used as input values to string-type properties of CloudFormation resources.
 
+# Motivation
+
+A CloudFormation user may want to use JSON strings as input to a resource property. For example, `AWS::CloudWatch::Dashboard` requires a JSON string for the `DashboardBody` attribute. A user may even want to use a JSON string as input to attributes where only a general string is required, such as in `SecretString` of `AWS::SecretsManager::Secret`.
+
+Today, this can only be accomplished through the use of external tools to convert object bodies to JSON strings, or use workarounds such as YAML multiline syntax (which has limitations such as the content only being parsed as generic text and not YAML by IDEs). Having a feature to automate this transformation can provide various benefits, such as improving development workflow, improving code readability, or being able to utilize JSON/YAML validation and syntax highlighting in text editors.
+
+Open Github request regarding this: https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/78
+
 # Examples
 
 Here is an example of a resource containing a string-type property using a JSON formatted string.
@@ -83,14 +91,6 @@ MyDashboard:
                     properties:
                         markdown: Hello world
 ```
-
-# Motivation
-
-A CloudFormation user may want to use JSON strings as input to a resource property. For example, `AWS::CloudWatch::Dashboard` requires a JSON string for the `DashboardBody` attribute. A user may even want to use a JSON string as input to attributes where only a general string is required, such as in `SecretString` of `AWS::SecretsManager::Secret`.
-
-Today, this can only be accomplished through the use of external tools to convert object bodies to JSON strings, or use workarounds such as YAML multiline syntax. Having a feature to automate this transformation can provide various benefits, such as improving development workflow, improving code readability, or being able to utilize JSON/YAML syntax highlighting in text editors.
-
-Open Github request regarding this: https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/78
 
 # Details
 
