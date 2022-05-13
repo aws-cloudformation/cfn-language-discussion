@@ -47,7 +47,7 @@ With the new `Fn::ToJsonString` intrinsic function we can simplify to the follow
 ```
 
 ## YAML
-```
+```yaml
 MyDashboard:
     Type: AWS::CloudWatch::Dashboard
     Properties:
