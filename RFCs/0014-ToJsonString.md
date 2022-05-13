@@ -10,7 +10,7 @@ We will support an intrinsic function called `Fn::ToJsonString` that enables dev
 # Examples
 
 Here is an example of a resource containing a string-type property using a JSON formatted string.
-```
+```json
 "MyDashboard": {
     "Type": "AWS::CloudWatch::Dashboard",
     "Properties": {
