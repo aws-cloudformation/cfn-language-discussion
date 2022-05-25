@@ -104,7 +104,7 @@ MyDashboard:
 
 # Limitation
 
-* YAML is a superset of JSON, so there are a few features in YAML that can not be converted to JSON due to their differences. For example, comments are supported in YAML but not JSON. This can potentially be a confusing developer experience if the developer is not aware of these limitations and have different expectations.
+* YAML is a superset of JSON, meaning there are features supported in YAML but not in JSON. Most notable is YAML's inline comment feature which does not have an equivalent in JSON. If `Fn::ToJsonString` is used on a YAML template block that contains comments, the comments will be automatically stripped out when converted to JSON. This can potentially be a confusing developer experience if the developer is not aware of these limitations and have different expectations.
 * Unsupported pseudo parameters:
     * `AWS::StackId`, `AWS::StackName`, `AWS::NotificationArns`, `AWS::URLSuffix`
 
