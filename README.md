@@ -8,9 +8,9 @@ Go to: [What is an RFC](#what-is-an-rfc) | [RFC Process](#rfc-process)
 <!--BEGIN_TABLE-->
 \#|Title|Owner|Status|
 ---|-----|-----|------|
-[9](https://github.com/aws-cloudformation/cfn-language-discussion/issues/9)|[Adding looping functionality in CFN Template](https://github.com/aws-cloudformation/cfn-language-discussion/pull/19)|[@MalikAtalla-AWS](https://github.com/MalikAtalla-AWS)|✍️ review
-[14](https://github.com/aws-cloudformation/cfn-language-discussion/issues/14)|[Convert Template Block to JSON String](https://github.com/aws-cloudformation/cfn-language-discussion/pull/15)|[@mluk-aws](https://github.com/mluk-aws)|✍️ review
-[11](https://github.com/aws-cloudformation/cfn-language-discussion/issues/11)|[Allow Intrinsic Functions and Pseudo-Parameter References in DeletionPolicy and UpdateReplacePolicy](https://github.com/aws-cloudformation/cfn-language-discussion/pull/21)|[@MalikAtalla-AWS](https://github.com/MalikAtalla-AWS)|✍️ review
+[9](https://github.com/aws-cloudformation/cfn-language-discussion/issues/9)|[Adding looping functionality in CFN Template](https://github.com/aws-cloudformation/cfn-language-discussion/pull/75)|[@MalikAtalla-AWS](https://github.com/MalikAtalla-AWS)|✍️ review
+[14](https://github.com/aws-cloudformation/cfn-language-discussion/issues/14)|[Convert Template Block to JSON String](https://github.com/aws-cloudformation/cfn-language-discussion/pull/76)|[@mluk-aws](https://github.com/mluk-aws)|✍️ review
+[11](https://github.com/aws-cloudformation/cfn-language-discussion/issues/11)|[Allow Intrinsic Functions and Pseudo-Parameter References in DeletionPolicy and UpdateReplacePolicy](https://github.com/aws-cloudformation/cfn-language-discussion/pull/74)|[@MalikAtalla-AWS](https://github.com/MalikAtalla-AWS)|👷 implementing
 [70](https://github.com/aws-cloudformation/cfn-language-discussion/issues/70)|[Adding Fn::Length support in CFN Template](https://github.com/aws-cloudformation/cfn-language-discussion/pull/72)|[@juegong2](https://github.com/juegong2)|✍️ review
 <!--END_TABLE-->
 
@@ -73,7 +73,7 @@ Once Implementation is complete, the CloudFormation Language team will change th
 
 We welcome you to use the GitHub issue tracker to report bugs or suggest features.
 
-When filing an issue, please check existing open or recently closed issues to make sure somebody else hasn't already reported the issue. 
+When filing an issue, please check existing open or recently closed issues to make sure somebody else hasn't already reported the issue.
 
 Please use the [bug report template](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=bug_report.md&title=) for reporting bugs and the [feature request template](https://github.com/aws-cloudformation/cfn-language-discussion/issues/new?assignees=&labels=&template=feature_request.md&title=) for requesting new features.
 
