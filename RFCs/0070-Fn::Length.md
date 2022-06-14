@@ -27,7 +27,7 @@ Use `Ref` on a Parameter of type `CommaDelimitedList` or `List<Number>`
     "NumberList": {
       "Type": "List<Number>"
     }
-  }
+  },
   "Conditions": {
     "Has3InstanceTypes": {
       "Fn::Equals": [
