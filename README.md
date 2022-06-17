@@ -11,7 +11,7 @@ Go to: [What is an RFC](#what-is-an-rfc) | [RFC Process](#rfc-process)
 [9](https://github.com/aws-cloudformation/cfn-language-discussion/issues/9)|[Adding looping functionality in CFN Template](https://github.com/aws-cloudformation/cfn-language-discussion/pull/75)|[@MalikAtalla-AWS](https://github.com/MalikAtalla-AWS)|✍️ review
 [14](https://github.com/aws-cloudformation/cfn-language-discussion/issues/14)|[Convert Template Block to JSON String](https://github.com/aws-cloudformation/cfn-language-discussion/pull/76)|[@mluk-aws](https://github.com/mluk-aws)|✍️ review
 [11](https://github.com/aws-cloudformation/cfn-language-discussion/issues/11)|[Allow Intrinsic Functions and Pseudo-Parameter References in DeletionPolicy and UpdateReplacePolicy](https://github.com/aws-cloudformation/cfn-language-discussion/pull/74)|[@MalikAtalla-AWS](https://github.com/MalikAtalla-AWS)|👷 implementing
-[70](https://github.com/aws-cloudformation/cfn-language-discussion/issues/70)|[Adding Fn::Length support in CFN Template](https://github.com/aws-cloudformation/cfn-language-discussion/pull/72)|[@juegong2](https://github.com/juegong2)|✍️ review
+[70](https://github.com/aws-cloudformation/cfn-language-discussion/issues/70)|[Adding Fn::Length support in CFN Template](https://github.com/aws-cloudformation/cfn-language-discussion/pull/72)|[@juegong2](https://github.com/juegong2)|👷 implementing
 <!--END_TABLE-->
 
 ## What is an RFC?
