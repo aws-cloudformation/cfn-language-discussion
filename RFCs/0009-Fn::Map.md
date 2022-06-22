@@ -19,11 +19,11 @@ In a CloudFormation template, a single Resource configures one infrastructure ob
 ```json
 {
   "Fn::Map": {
-    "index": "Index",
-    "value": "Value",
-    "collection": "CollectionToIterate",
-    "fragment": { },
-    "key": "Key"
+    "Index": "Index",
+    "Value": "Value",
+    "Collection": "CollectionToIterate",
+    "Fragment": { },
+    "Key": "Key"
   }
 }
 ```
@@ -31,31 +31,31 @@ In a CloudFormation template, a single Resource configures one infrastructure ob
 ### Yaml
 ```yaml
 Fn::Map: # or !Map
-  index: "Index"
-  value: "Value"
-  collection: "CollectionToIterate"
-  fragment: { }
-  key: "Key"
+  Index: "Index"
+  Value: "Value"
+  Collection: "CollectionToIterate"
+  Fragment: { }
+  Key: "Key"
 ```
 
 ### Parameters
 
 Fn::Map supports 5 parameters.
 
-* `index` (optional)
+* `Index` (optional)
     * The name of an iterator variable which stores a positional index of each value in a given List.
     * The index number sequence starts from 0.
     * String type
-    * the default value is "index"
-* `value` (optional)
+    * the default value is "Index"
+* `Value` (optional)
     * The name of an iterator variable which stores each value in a List.
     * String type
-    * the default value is "value"
-* `collection`
+    * the default value is "Value"
+* `Collection`
     * The collection to iterate on. It must be a List. You can either in-place the collection itself or reference List type parameter values from the Parameters section.
-* `fragment`
+* `Fragment`
     * The fragment to replicate for each item in iteration
-* `key` (conditional)
+* `Key` (conditional)
     * The json or yaml key for replicated objects. For Resources and Outputs this will be the logical id.
     * **This field is only required when Fn::Map should generate an object of key value pairs, for example in the Resources or Outputs section of a template. It should not be specified when using Fn::Map to generate an array, for example a list type attribute for a Resource Property.** 
     * The value **should be interpolated with an index** using `Fn::Sub` intrinsic function.
@@ -116,7 +116,7 @@ Fn::Merge will throw an error when there is a key collision. The below examples 
 # Examples
 ### Usage in Resources Section
 #### Use case: Replicate a single Resource
-* Note that the **`key`** parameter is provided.
+* Note that the **`Key`** parameter is provided.
 
 In Json:
 ```json
@@ -127,17 +127,17 @@ In Json:
     "Fn::Merge": [
       {
         "Fn::Map": {
-          "index": "i",
-          "value": "x",
-          "collection": ["ami-1", "ami-2", "ami-3"],
-          "fragment": {
+          "Index": "i",
+          "Value": "x",
+          "Collection": ["ami-1", "ami-2", "ami-3"],
+          "Fragment": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
               "InstanceType": "m1.small",
               "ImageId": {"Ref": "x"}
             }
           },
-          "key": {
+          "Key": {
             "Fn::Sub": "Instance${i}"
           }
         }
@@ -159,15 +159,15 @@ Description: EC2 Instances with different AMIs
 Resources:
   Fn::Merge:
     - Fn::Map:
-        index: i
-        value: x
-        collection: [ "ami-1", "ami-2", "ami-3" ]
-        fragment:
+        Index: i
+        Value: x
+        Collection: [ "ami-1", "ami-2", "ami-3" ]
+        Fragment:
           Type: AWS::EC2::Instance
           Properties:
             InstanceType: m1.small
             ImageId: !Ref x
-        key:
+        Key:
           Fn::Sub: Instance${i}
   MyS3Bucket:
     Type: AWS::S3::Bucket
@@ -197,7 +197,7 @@ Resources:
       ImageId: "ami-3"
 ```
 #### Use case: Replicate Multiple Resources
-Note also the usage of defaults for index and value
+Note also the usage of defaults for Index and Value
 * In Json
 ```json
 {
@@ -207,29 +207,29 @@ Note also the usage of defaults for index and value
     "Fn::Merge": [
       {
         "Fn::Map": {
-          "collection": ["172.16.0.0/16", "172.17.0.0/16", "172.18.0.0/16"],
-          "fragment": {
+          "Collection": ["172.16.0.0/16", "172.17.0.0/16", "172.18.0.0/16"],
+          "Fragment": {
             "Type": "AWS::EC2::VPC",
             "Properties": {
-              "CidrBlock": {"Ref": "value"}
+              "CidrBlock": {"Ref": "Value"}
             }
           },
-          "key": {
-            "Fn::Sub": "Vpc${index}"
+          "Key": {
+            "Fn::Sub": "Vpc${Index}"
           }
         }
       },
       {
         "Fn::Map": {
-          "collection": ["172.16.0.0/16", "172.17.0.0/16", "172.18.0.0/16"],
-          "fragment": {
+          "Collection": ["172.16.0.0/16", "172.17.0.0/16", "172.18.0.0/16"],
+          "Fragment": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-              "VpcId": {"Ref": {"Fn::Sub":  "Vpc${index}"}}
+              "VpcId": {"Ref": {"Fn::Sub":  "Vpc${Index}"}}
             }
           },
-          "key": {
-            "Fn::Sub": "Subnet${index}"
+          "Key": {
+            "Fn::Sub": "Subnet${Index}"
           }
         }
       }
@@ -250,26 +250,26 @@ Description: VPCs and Subnets
 Resources:
   Fn::Merge:
     - !Map:
-        collection:
+        Collection:
           - 172.16.0.0/16
           - 172.17.0.0/16
           - 172.18.0.0/16
-        fragment:
+        Fragment:
           Type: AWS::EC2::VPC
           Properties:
-            CidrBlock: !Ref value
-        key: !Sub Vpc${i}
+            CidrBlock: !Ref Value
+        Key: !Sub Vpc${i}
     - !Map:
-        collection:
+        Collection:
           - 172.16.0.0/16
           - 172.17.0.0/16
           - 172.18.0.0/16
-        fragment:
+        Fragment:
           Type: AWS::EC2::Subnet
           Properties:
             VpcId: 
-              Ref: !Sub "Vpc${index}"
-        key: !Sub Subnet${index}
+              Ref: !Sub "Vpc${Index}"
+        Key: !Sub Subnet${Index}
   MyS3Bucket:
     Type: AWS::S3::Bucket
   MyQueue:
@@ -327,9 +327,9 @@ Resources:
         "InstanceType": "m1.small",
         "Ipv6Addresses": {
           "Fn::Map": {
-            "collection": {"Ref": "InstanceIpv6Address"},
-            "fragment": {
-              "Ipv6Address": {"Ref": "value"}
+            "Collection": {"Ref": "InstanceIpv6Address"},
+            "Fragment": {
+              "Ipv6Address": {"Ref": "Value"}
             }
           }
         }
@@ -353,9 +353,9 @@ Resources:
       InstanceType: m1.small
       Ipv6Addresses:
         Fn::Map:
-          collection: !Ref InstanceIpv6Address
-          fragment:
-            Ipv6Address: !Ref value
+          Collection: !Ref InstanceIpv6Address
+          Fragment:
+            Ipv6Address: !Ref Value
 ```
 * The Above templates would be equivalent to the below:
 ```yaml
@@ -389,18 +389,18 @@ Resources:
     "Fn::Merge": [
       {
         "Fn::Map": {
-          "collection": ["ami-1", "ami-2", "ami-3"],
-          "fragment": {
+          "Collection": ["ami-1", "ami-2", "ami-3"],
+          "Fragment": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
               "InstanceType": "m1.small",
               "ImageId": {
-                "Ref": "value"
+                "Ref": "Value"
               }
             }
           },
-          "key": {
-            "Fn::Sub": "Instance${index}"
+          "Key": {
+            "Fn::Sub": "Instance${Index}"
           }
         }
       }
@@ -409,39 +409,39 @@ Resources:
       "Fn::Merge": [
         {
           "Fn::Map": {
-            "collection": ["Instance0", "Instance1"],
-            "fragment": {
+            "Collection": ["Instance0", "Instance1"],
+            "Fragment": {
               "Description": {
-                "Fn::Sub": "Instance Id for ${value}"
+                "Fn::Sub": "Instance Id for ${Value}"
               },
               "Value": {
                 "Fn::Ref": {
-                  "Fn::Ref": "value"
+                  "Fn::Ref": "Value"
                 }
               }
             },
-            "key": {
-              "Fn::Sub": "InstanceId${index}"
+            "Key": {
+              "Fn::Sub": "InstanceId${Index}"
             }
           }
         },
         {
           "PrivateIps": {
             "Fn::Map": {
-              "collection": ["Instance0", "Instance1"],
-              "fragment": {
+              "Collection": ["Instance0", "Instance1"],
+              "Fragment": {
                 "Description": {"Fn::Sub": "Private IP for ${x}"},
                 "Value": {
                   "Fn::GetAtt": [
                     {
-                      "Fn::Ref": "value"
+                      "Fn::Ref": "Value"
                     },
                     "PrivateIp"
                   ]
                 }
               },
-              "key": {
-                "Fn::Sub": "PrivateIp${index}"
+              "Key": {
+                "Fn::Sub": "PrivateIp${Index}"
               }
             }
           }
@@ -458,45 +458,45 @@ Description: EC2 Instances with different AMIs
 Resources:
   Fn::Merge:
     - Fn::Map:
-        collection:
+        Collection:
           - ami-1
           - ami-2
           - ami-3
-        fragment:
+        Fragment:
           Type: AWS::EC2::Instance
           Properties:
             InstanceType: m1.small
             ImageId:
-              Ref: value
-        key:
-          Fn::Sub: Instance${index}
+              Ref: Value
+        Key:
+          Fn::Sub: Instance${Index}
   Outputs:
     Fn::Merge:
       - Fn::Map:
-          collection:
+          Collection:
             - Instance0
             - Instance1
-          fragment:
+          Fragment:
             Description:
-              Fn::Sub: Instance Id for ${value}
+              Fn::Sub: Instance Id for ${Value}
             Value:
               Fn::Ref:
-                Fn::Ref: value
-          key:
+                Fn::Ref: Value
+          Key:
             Fn::Sub: InstanceId${i}
       - PrivateIps:
           Fn::Map:
-            collection:
+            Collection:
               - Instance0
               - Instance1
-            fragment:
+            Fragment:
               Description:
-                Fn::Sub: Private IP for ${value}
+                Fn::Sub: Private IP for ${Value}
               Value:
                 Fn::GetAtt:
-                  - Fn::Ref: value
+                  - Fn::Ref: Value
                   - PrivateIp
-            key:
+            Key:
               Fn::Sub: PrivateIp${i}
 ```
 * The above templates would be equivalent to the below:
@@ -556,15 +556,15 @@ Outputs:
         "Fn::Merge": [
           {
             "Fn::Map": {
-              "collection": ["ami-1", "ami-2", "ami-3"],
-              "fragment": {
+              "Collection": ["ami-1", "ami-2", "ami-3"],
+              "Fragment": {
                 "Type": "AWS::EC2::Instance",
                 "Properties": {
                   "InstanceType": "m1.small",
-                  "ImageId": {"Ref": "value"}
+                  "ImageId": {"Ref": "Value"}
                 }
               },
-              "key": {"Fn::Sub": "Instance${index}"}
+              "Key": {"Fn::Sub": "Instance${Index}"}
             }
           }
         ]
@@ -590,17 +590,17 @@ Description: EC2 Instances with different AMIs
 Resources:
   Fn::Merge:
     - Fn::Map:
-        collection:
+        Collection:
           - ami-1
           - ami-2
           - ami-3
-        fragment:
+        Fragment:
           Type: AWS::EC2::Instance
           Properties:
             InstanceType: m1.small
-            ImageId: !Ref value
-        key:
-          Fn::Sub: Instance${index}
+            ImageId: !Ref Value
+        Key:
+          Fn::Sub: Instance${Index}
 Outputs:
   SecondInstanceId:
     Description: Instance Id for Instance1
@@ -661,14 +661,14 @@ Parameters:
 Resources:
   Fn::Merge:
     - Fn::Map:
-        collection: !Ref AmiIds
-        fragment:
+        Collection: !Ref AmiIds
+        Fragment:
           Type: AWS::EC2::Instance
           Properties:
             InstanceType: m1.small
-            ImageId: !Ref value
-        key:
-          Fn::Sub: Instance${index}
+            ImageId: !Ref Value
+        Key:
+          Fn::Sub: Instance${Index}
   Bucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -676,7 +676,7 @@ Resources:
 ```
 
 #### Logical Id Customization
-* You are required to customize Names (Logical Ids) of Resource and Outputs. Specify the key parameter by using Fn::Sub with Index or Value. Make sure the resulting Logical Ids are unique within the template and alphanumerical.
+* You are required to customize Names (Logical Ids) of Resource and Outputs. Specify the Key parameter by using Fn::Sub with Index or Value. Make sure the resulting Logical Ids are unique within the template and alphanumerical.
 ```yaml
 AWSTemplateFormatVersion: '2010-09-09'
 Description: "EC2 Instances with different AMIs"
@@ -687,14 +687,14 @@ Parameters:
 Resources:
   Fn::Merge:
     - Fn::Map:
-        collection: !Ref AmiIds
-        fragment:
+        Collection: !Ref AmiIds
+        Fragment:
           Type: AWS::EC2::Instance
           Properties:
             InstanceType: m1.small
-            ImageId: !Ref value
-        key:
-          Fn::Sub: Instance${index}
+            ImageId: !Ref Value
+        Key:
+          Fn::Sub: Instance${Index}
   Bucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -711,16 +711,16 @@ Parameters:
 Resources:
   Fn::Merge:
     - Fn::Map:
-        collection: !Ref AmiIds
-        fragment:
+        Collection: !Ref AmiIds
+        Fragment:
           Type: AWS::EC2::Instance
           Properties:
-            ImageId: !Ref value
-        key: !Sub Instance${index}
+            ImageId: !Ref Value
+        Key: !Sub Instance${Index}
 ```
 
-#### Customize value and index variable names
-The optional index and value parameters can be used to customize the corresponding variable names
+#### Customize Value and Index variable names
+The optional Index and Value parameters can be used to customize the corresponding variable names
 ```yaml
 Parameters:
   AmiIds:
@@ -728,18 +728,18 @@ Parameters:
 Resources:
   Fn::Merge:
     - Fn::Map:
-        index: amiCounter
-        value: amiId
-        collection: !Ref AmiIds
-        fragment:
+        Index: amiCounter
+        Value: amiId
+        Collection: !Ref AmiIds
+        Fragment:
           Type: AWS::EC2::Instance
           Properties:
             ImageId: !Ref amiId
-        key: !Sub Instance${amiCounter}
+        Key: !Sub Instance${amiCounter}
 ```
 
 #### Nested Fn::Map
-* Using customized names for index and value is particularly useful when nesting declarations of Fn::Map
+* Using customized names for Index and Value is particularly useful when nesting declarations of Fn::Map
 ```yaml
 Parameters:
   InstanceSizes:
@@ -751,20 +751,20 @@ Parameters:
 Resources:
   Fn::Merge:
     - Fn::Map:
-        index: i1
-        value: x1
-        collection: !Ref InstanceSizes
-        key: !Sub "Instance${i1}"
-        fragment:
+        Index: i1
+        Value: x1
+        Collection: !Ref InstanceSizes
+        Key: !Sub "Instance${i1}"
+        Fragment:
           Type: AWS::EC2::Instance
           Properties:
             InstanceType: !Ref x1
             Ipv6Addresses:
               - Fn::Map:
-                  index: i2
-                  value: x2
-                  collection: !Ref Ipv6Addresses
-                  fragment:
+                  Index: i2
+                  Value: x2
+                  Collection: !Ref Ipv6Addresses
+                  Fragment:
                     - Ipv6Address: !Ref x2
 ```
 * The above template is equivalent to the below:
@@ -808,20 +808,20 @@ Parameters:
 Resources:
   Fn::Merge:
     - Fn::Map:
-        index: i1
-        value: x1
-        collection: !Ref Subnets
-        key: !Sub "Instance${i1}"
-        fragment:
+        Index: i1
+        Value: x1
+        Collection: !Ref Subnets
+        Key: !Sub "Instance${i1}"
+        Fragment:
           Type: AWS::EC2::Instance
           InstanceType: "m1.small"
           SubnetId: !Ref x1
           Tags:
             - Fn::Map:
-                index: i2
-                value: x2
-                collection: !Ref TagValues
-                fragment:
+                Index: i2
+                Value: x2
+                Collection: !Ref TagValues
+                Fragment:
                   Key: !Sub "${x1}"
                   Value: !Sub "${x2}"
 ```
@@ -833,7 +833,7 @@ The following features are out of scope of this RFC. Separate RFC could be creat
 ### Modules
 * `Fn::Map` should support replicating Modules
 
-### Replicate a fragment for certain number of times
+### Replicate a Fragment a certain number of times
 * For a number parameter x, replicate a given template block x number of times.
 
 Users can easily work around this limitation by iterating over a hardcoded list:
@@ -841,12 +841,12 @@ Users can easily work around this limitation by iterating over a hardcoded list:
 Resources:
   Fn::Merge:
     - Fn::Map:
-        collection: [1, 2, 3, 4]
-        fragment:
+        Collection: [1, 2, 3, 4]
+        Fragment:
           Type: AWS::EC2::Instance
           Properties:
             ImageId: "ami-123"
-        key: !Sub Instance${index}
+        Key: !Sub Instance${Index}
 ```
 
 ### Zipping
@@ -854,7 +854,7 @@ Resources:
 
 # Limitations
 #### Replicate multiple Resource objects in a single Fn::Map usage
-* To replicate a Resource/Output object, a custom key interpolated with an index has to be provided under the `key` parameter. This means an `Fn::Map` loop can be used to replicate only one Resource at a time. To replicate multiple Resources, `Fn::Map` has to be defined for each Resource.
+* To replicate a Resource/Output object, a custom key interpolated with an Index has to be provided under the `Key` parameter. This means an `Fn::Map` loop can be used to replicate only one Resource at a time. To replicate multiple Resources, `Fn::Map` has to be defined for each Resource.
 
 #### A Collection to Iterate on has to have known values
 * All the values in a list have to be *known* before resource provisioning, otherwise it will throw an error message that Fn::Map received a value which cannot be resolved. You can’t, for example, refer to an attribute of a Resource. Values must be known before CFN performs any remote resource interactions.
@@ -874,8 +874,8 @@ Resources:
      Properties:
         SecurityGroups:
           - Fn::Map:
-              collection: [!Ref SecurityGroup]
-              fragment: !Ref value
+              Collection: [!Ref SecurityGroup]
+              Fragment: !Ref Value
 ```
 
 #### You can’t reference NoEcho Parameter
@@ -891,8 +891,8 @@ Resources:
      Properties:
         Subscription:
           - Fn::Map:
-            collection: !Ref NoEchoList
-            fragment:
-              Endpoint: !Ref value
+            Collection: !Ref NoEchoList
+            Fragment:
+              Endpoint: !Ref Value
 ```
 * In this case the value of the collection would be used to replicate topic subscriptions, which means the values of the no echo list would be exposed in the processed template. So NoEcho lists cannot be used to iterate over.
