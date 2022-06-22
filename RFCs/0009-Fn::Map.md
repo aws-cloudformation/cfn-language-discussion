@@ -1,4 +1,4 @@
-# New Intrinsic Function for looping: `Fn::Map`
+# Looping functionality for CFN Templates
 
 * **Original Author(s):**: @mingujo
 * **Tracking Issue**: [Tracking Issue: Fn::Map](https://github.com/aws-cloudformation/cfn-language-discussion/issues/9)
@@ -67,24 +67,24 @@ Fn::Merge takes an array of objects as input and merges them into the parent obj
 {
   "Fn::Merge": [
     {
-      "key1": { },
-      "key2": { }
+      "Key1": { },
+      "Key2": { }
     },
     {
-      "key3": { }
+      "Key3": { }
     }
   ],
-  "key4": { }
+  "Key4": { }
 }
 ```
 
 Result:
 ```json
 {
-  "key1": { },
-  "key2": { },
-  "key3": { },
-  "key4": { }
+  "Key1": { },
+  "Key2": { },
+  "Key3": { },
+  "Key4": { }
 }
 ```
 
@@ -94,10 +94,10 @@ Fn::Merge will throw an error when there is a key collision. The below examples 
 {
   "Fn::Merge": [
     {
-      "key1": {}
+      "Key1": {}
     },
     {
-      "key1": { }
+      "Key1": { }
     }
   ]
 }
@@ -106,10 +106,10 @@ Fn::Merge will throw an error when there is a key collision. The below examples 
 {
   "Fn::Merge": [
     {
-      "key1": {}
+      "Key1": {}
     }
   ],
-  "key1": { }
+  "Key1": { }
 }
 ```
 
@@ -195,6 +195,10 @@ Resources:
     Properties:
       InstanceType: "m1.small"
       ImageId: "ami-3"
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+  MyQueue:
+    Type: AWS::SQS::Queue
 ```
 #### Use case: Replicate Multiple Resources
 Note also the usage of defaults for Index and Value
@@ -258,7 +262,7 @@ Resources:
           Type: AWS::EC2::VPC
           Properties:
             CidrBlock: !Ref Value
-        Key: !Sub Vpc${i}
+        Key: !Sub Vpc${Index}
     - !Map:
         Collection:
           - 172.16.0.0/16
@@ -305,6 +309,10 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref Vpc2
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+  MyQueue:
+    Type: AWS::SQS::Queue
 ```
 
 #### Use case: Concisely define a list type property of Resource using parametrization
@@ -430,7 +438,7 @@ Resources:
             "Fn::Map": {
               "Collection": ["Instance0", "Instance1"],
               "Fragment": {
-                "Description": {"Fn::Sub": "Private IP for ${x}"},
+                "Description": {"Fn::Sub": "Private IP for ${Value}"},
                 "Value": {
                   "Fn::GetAtt": [
                     {
@@ -483,7 +491,7 @@ Resources:
               Fn::Ref:
                 Fn::Ref: Value
           Key:
-            Fn::Sub: InstanceId${i}
+            Fn::Sub: InstanceId${Index}
       - PrivateIps:
           Fn::Map:
             Collection:
@@ -497,7 +505,7 @@ Resources:
                   - Fn::Ref: Value
                   - PrivateIp
             Key:
-              Fn::Sub: PrivateIp${i}
+              Fn::Sub: PrivateIp${Index}
 ```
 * The above templates would be equivalent to the below:
 ```yaml
@@ -891,8 +899,8 @@ Resources:
      Properties:
         Subscription:
           - Fn::Map:
-            Collection: !Ref NoEchoList
-            Fragment:
-              Endpoint: !Ref Value
+              Collection: !Ref NoEchoList
+              Fragment:
+                Endpoint: !Ref Value
 ```
 * In this case the value of the collection would be used to replicate topic subscriptions, which means the values of the no echo list would be exposed in the processed template. So NoEcho lists cannot be used to iterate over.
