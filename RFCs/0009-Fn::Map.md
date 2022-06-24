@@ -40,7 +40,7 @@ Fn::Map: # or !Map
 
 ### Parameters
 
-Fn::Map supports 5 parameters.
+Fn::Map supports 5 parameters. Note, that the parameters are named, not positional.
 
 * `Index` (optional)
     * The name of an iterator variable which stores a positional index of each value in a given List.
