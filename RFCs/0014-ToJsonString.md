@@ -100,13 +100,14 @@ MyDashboard:
 * Intrinsic functions (e.g. `Fn::If`, `Ref`) or pseudo parameters (e.g. `AWS::NoValue`) can be used within the input template block. The input template block will be processed by the intrinsic functions and pseudo parameters before it is converted to a string (i.e. the resolved value of the intrinsic function is converted to the output string, and not the intrinsic function itself).
 * Conversion will always retain the same order of key-value pairs such that the converted strings of the same input template block are guaranteed to not change.
 * The following pseudo parameters will be supported:
-    * `AWS::AccountId`, `AWS::Region`, `AWS::Partition`, `AWS::NoValue`
+    * `AWS::AccountId`, `AWS::Region`, `AWS::Partition`, `AWS::NoValue`, `AWS::StackId`, `AWS::StackName`, `AWS::URLSuffix`
 
 # Limitation
 
 * YAML is a superset of JSON, meaning there are features supported in YAML but not in JSON. Most notable is YAML's inline comment feature which does not have an equivalent in JSON. If `Fn::ToJsonString` is used on a YAML template block that contains comments, the comments will be automatically stripped out when converted to JSON. This can potentially be a confusing developer experience if the developer is not aware of these limitations and have different expectations.
 * Unsupported pseudo parameters:
-    * `AWS::StackId`, `AWS::StackName`, `AWS::NotificationArns`, `AWS::URLSuffix`
+    * `AWS::NotificationARNs`
+* The object passed to the `Fn::ToJsonString` intrinsic function must be either a `Map` or an `Array`
 
 # FAQ
 * Will the CloudFormation Linter (cfn-lint) support validations regarding Fn::ToJsonString?
