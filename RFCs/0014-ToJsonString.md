@@ -107,7 +107,7 @@ MyDashboard:
 * YAML is a superset of JSON, meaning there are features supported in YAML but not in JSON. Most notable is YAML's inline comment feature which does not have an equivalent in JSON. If `Fn::ToJsonString` is used on a YAML template block that contains comments, the comments will be automatically stripped out when converted to JSON. This can potentially be a confusing developer experience if the developer is not aware of these limitations and have different expectations.
 * Unsupported pseudo parameters:
     * `AWS::NotificationARNs`
-* The object passed to the `Fn::ToJsonString` intrinsic function must be either a `Map` or an `Array`
+* The object passed to the `Fn::ToJsonString` intrinsic function must be either an `Object` or an `Array`. Simple types such as number, boolean or string are not supported.
 
 # FAQ
 * Will the CloudFormation Linter (cfn-lint) support validations regarding Fn::ToJsonString?
