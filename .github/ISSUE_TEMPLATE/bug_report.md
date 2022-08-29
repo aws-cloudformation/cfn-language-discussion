@@ -43,8 +43,7 @@ What goes wrong? Please describe the issue in as much detail as possible.
 ### **Observed behavior**
 
 ### **Test cases**
+Please include a minimal CloudFormation template here that reproduces the issue
 
 ### **Additional context**
 Anything else we should know?
-
-### **Supporting Log Snippets**
