@@ -1,0 +1,48 @@
+# Declarative CDK
+
+* **Original Author(s):**: @evgenyka
+* **Tracking Issue**: #97
+
+# Summary
+
+Introducing Declarative CDK - a project that allows non-developer customers use CDK Constructs in their CloudFormation templates. 
+
+# Motivation
+
+The customers will benefit from an abstraction level that AWS CDK Constructs provide and ability to reuse existing Constructs content. It will result in the modularity of the CloudFormation templates, which will minimize the risks of ending up with template errors and also makes it easier to spot errors, if any.
+Customer can declare CDK Construct resource in the template, including all functions, dependencies, parameters and other settings. When CloudFormation is deploying the Stack from the template, the template will be pre-processed: the CDK App will be created and runtime by deCDK component that will be executed on the server side and the template will be synthesized on the fly. Then, the stack will be generated from that template by CloudFormation
+That process will allow to leverage CDK Constructs in CloudFormation template without any special knowledge of coding, exactly same way as declarative resources.
+
+# Example(s)
+
+See https://github.com/cdklabs/decdk/blob/main/examples/application-load-balancer.yaml
+
+# Limitation
+
+- Third-party libraries are not supported. Only aws-cdk-lib can be used.
+- User defined assets (e.g., code for a Lambda function) are not supported, as it runs on the server side. Assets that are bundled with the construct library, however, are supported. 
+- Lookups are not supported (fromLookup(), stack.availabilityZones, etc.)
+- Any constructs using Docker for bundling are not supported.
+- Does not support creating additional Parameters. This affects all Constructs automatically creating a Parameter for the user.
+- Reading the magic SSM parameters is not supported
+
+
+# Details
+
+deCDK is a TypeScript application that consumes a declarative template and produces a cloud assembly. A declarative template is a CloudFormation template enriched with CDK constructs. A cloud assembly is a folder with CloudFormation templates (in our case, only one) and metadata. Note that, in order for deCDK to generate a cloud assembly, it must depend on the CDK construct library. In this respect, deCDK is just a CDK application, like any other. The only difference is that it is dynamic and produces a cloud assembly based on the template it receives as input. In contrast, a “normal” CDK application is a constant function: it receives no input and produces the same output every time.
+
+# Alternatives considered (optional)
+
+N/A
+
+# FAQ
+1.	Question: Is using Declarative CDK requires any additional setup on my AWS account?
+Answer: No, there is no extra setup required.
+2.	Question: Can I use my hand-written private Construct with Declarative CDK?
+Answer: No, currently Declarative CDK supports only Constructs that are published publicly. See AWS Construct Hub.
+3.	Question: Where can I find the information about the syntax of Declarative CDK?
+Answer: The syntax and another information are published as part of AWS CDK documentation. You also will have a reference of it in AWS CloudFormation docs.
+
+
+# Appendix
+N/A
