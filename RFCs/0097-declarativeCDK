@@ -33,7 +33,7 @@ deCDK is a TypeScript application that consumes a declarative template and produ
 
 # Alternatives considered (optional)
 
-N/A
+[CloudFormation modules](https://aws.amazon.com/blogs/mt/introducing-aws-cloudformation-modules/) are an alternative to achieve the modularity of CloudFormation template. 
 
 # FAQ
 1.	Question: Is using Declarative CDK requires any additional setup on my AWS account?
@@ -42,7 +42,10 @@ Answer: No, there is no extra setup required.
 Answer: No, currently Declarative CDK supports only Constructs that are bundled with aws-cdk-lib.
 3.	Question: Where can I find the information about the syntax of Declarative CDK?
 Answer: The syntax and another information are published as part of AWS CDK documentation. You also will have a reference of it in AWS CloudFormation docs.
-
+4.	Question: How do I see errors from the CDK application?
+Answer: The errors from the CDK application are propogated to the CloudFormation console.
+5.	Question: How do I make sure my deCDK template is valid without deploying it / without uploading it??
+Answer: [deCDK](https://github.com/cdklabs/decdk) is available as a client-side tool, so you can run it localy and it will generate the template that you can validate wihtout deploying/uploading it.
 
 # Appendix
 N/A
