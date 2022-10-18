@@ -5,7 +5,7 @@
 
 # Summary
 
-Introducing Declarative CDK - a project that allows non-developer customers use CDK Constructs in their CloudFormation templates. 
+Introducing Declarative CDK - a project that allows customers use CDK Constructs in their CloudFormation templates. 
 
 # Motivation
 
@@ -20,7 +20,7 @@ See https://github.com/cdklabs/decdk/blob/main/examples/application-load-balance
 # Limitation
 
 - Third-party libraries are not supported. Only aws-cdk-lib can be used.
-- User defined assets (e.g., code for a Lambda function) are not supported, as it runs on the server side. Assets that are bundled with the construct library, however, are supported. 
+- User defined local assets (e.g., code for a Lambda function) are not supported, as it runs on the server side. Assets that are bundled with the construct library, however, are supported. Also, file assets point to an S3 location is supported.
 - Lookups are not supported (fromLookup(), stack.availabilityZones, etc.)
 - Any constructs using Docker for bundling are not supported.
 - Does not support creating additional Parameters. This affects all Constructs automatically creating a Parameter for the user.
@@ -39,7 +39,7 @@ N/A
 1.	Question: Is using Declarative CDK requires any additional setup on my AWS account?
 Answer: No, there is no extra setup required.
 2.	Question: Can I use my hand-written private Construct with Declarative CDK?
-Answer: No, currently Declarative CDK supports only Constructs that are published publicly. See AWS Construct Hub.
+Answer: No, currently Declarative CDK supports only Constructs that are bundled with aws-cdk-lib.
 3.	Question: Where can I find the information about the syntax of Declarative CDK?
 Answer: The syntax and another information are published as part of AWS CDK documentation. You also will have a reference of it in AWS CloudFormation docs.
 
