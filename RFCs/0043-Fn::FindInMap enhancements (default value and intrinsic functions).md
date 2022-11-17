@@ -28,10 +28,10 @@ CloudFormation users may want to reuse their templates across many different use
 
 Here is an example where DNS varies from country to country
 
-```
+```yaml
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
-  country:
+  Country:
     Type: String
 Mappings:
   DNS:
@@ -71,7 +71,7 @@ Resources:
     Properties:
       DomainName: !FindInMap 
         - DNS
-        - !Ref country
+        - !Ref Country
         - dns
 ```
 
@@ -117,7 +117,8 @@ If the mapping can be found, it returns the value of the mapping as before, whil
 
 Here is an example using `Fn::Select` and `Fn::Split` in `Fn::FindInMap` - [credit](https://github.com/aws-cloudformation/cfn-language-discussion/issues/73)
 
-```
+```yaml
+AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::LanguageExtensions
 Parameters:
   AsymmetricRSAKeyUsage:
@@ -171,7 +172,7 @@ Resources:
 
 Here is an example that simplifies the use case we discussed before
 
-```
+```yaml
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::LanguageExtensions
 Parameters:
@@ -206,7 +207,7 @@ Resources:
     Properties:
       DomainName: !FindInMap 
         - DNS
-        - !Ref country
+        - !Ref Country
         - dns
         - DefaultValue: !FindInMap 
             - DNS
@@ -220,7 +221,7 @@ With default value added, the size of Mapping section is significantly reduced. 
 
 Here is another example using default value to set EC2 instance type
 
-```
+```yaml
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::LanguageExtensions
 Mapping:
@@ -249,7 +250,7 @@ There will be few limitations when using other intrinsic functions or default va
 
 1. User can not use `Fn::Split` to supply argument list (partial or whole) of `Fn::FindInMap`. However, please do note that it **CAN** be used in conjunction with other functions that produce a `string` such as `Fn::Select`. Here is an example:
 
-```
+```yaml
 # This is not allowed
 !FindInMap !Split [".", "RegionMap.us-east-1.HVM64"] ]
 
@@ -260,13 +261,14 @@ There will be few limitations when using other intrinsic functions or default va
   - !Select [2, !Split [ ".", "RegionMap.us-east-1.HVM64" ] ]
 ```
 
-1. `Fn::FindInMap` enhancement is made available via [`AWS::LanguageExtensions` transform](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-languageextensions.html), hence `Fn::FindInMap` can only support operations whose return values are known during transform time. When unsupported intrinsic functions are used, an exception will be returned back to customers.
-    1. Here are examples not supported:
-        1. `Ref` to a resource.
-        2. `Fn::GetAtt` to retrieve an attribute from a resource.
-        3. `Fn::Sub` with nested `Fn::GetAtt` or `Ref` which points to a resource or resource attribute. 
+2. `Fn::FindInMap` enhancement is made available via [`AWS::LanguageExtensions` transform](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-languageextensions.html), hence `Fn::FindInMap` can only support operations whose return values are known during transform time. When unsupported intrinsic functions are used, an exception will be returned back to customers. Here are intrinsic functions that are not supported:
+    1. `Ref` to a resource.
+    2. `Fn::GetAtt` to retrieve an attribute from a resource.
+    3. `Fn::Sub` with nested `Fn::GetAtt` or `Ref` which points to a resource or resource attribute.
+    
+For example, the following will *NOT* be supported
 
-```
+```yaml
 Mapping:
   AttributeMap:
     mypage:
@@ -280,6 +282,7 @@ Resources:
 # Customer will get an error back in either case.
 !FindInMap 
 - DNSMap
+# GetAtt of a resource attribute is not supported, even when DefaultValue is supplied
 - !Select [0, !Split [".", !GetAtt LoadBalancer.DNSName]]
 - ttl
 - DefaultValue: 500
@@ -288,6 +291,7 @@ Resources:
 - DNSMap
 - NonExistPage
 - ttl
+# GetAtt of a resource attribute is not supported by DefaultValue
 - DefaultValue: !Select [0, !Split [".", !GetAtt LoadBalancer.DNSName ] ]
 ```
 
