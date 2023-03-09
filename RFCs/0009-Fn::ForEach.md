@@ -23,7 +23,7 @@ Customers can declare `Fn::ForEach` to iterate over a list of collections to gen
         "Identifier",
         ["Value1", "Value2"], // Collection
         {
-            "OutputKey": "OutputValue"
+            "OutputKey": "OutputValue" // Ex: {"OutputKeyName${Identifier}": "OutputValue"}
         }
     ]
 }
@@ -35,7 +35,7 @@ Customers can declare `Fn::ForEach` to iterate over a list of collections to gen
 'Fn::ForEach::<UniqueLoopName>':
   - Identifier
   - [Value1, Value2]  ## Collection
-  - 'OutputKey': OutputValue
+  - 'OutputKey': OutputValue  ## Ex: 'OutputKeyName${Identifier}': 'OutputValue'
 ```
 
 ### Parameters
