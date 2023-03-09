@@ -17,13 +17,13 @@ Customers can declare `Fn::ForEach` to iterate over a list of collections to gen
 
 ### JSON
 
-```json
+```yaml
 {
     "Fn::ForEach::<UniqueLoopName>": [
         "Identifier",
-        ["Value1", "Value2"], // Collection
+        ["Value1", "Value2"], ## Collection
         {
-            "OutputKey": "OutputValue" // Ex: {"OutputKeyName${Identifier}": "OutputValue"}
+            "OutputKey": "OutputValue" ## Ex: {"OutputKeyName${Identifier}": "OutputValue"}
         }
     ]
 }
