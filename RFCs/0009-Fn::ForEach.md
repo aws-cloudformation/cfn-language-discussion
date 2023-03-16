@@ -162,7 +162,7 @@ Yes, customers are limited to CloudFormation service quota limits such as number
 
 ### Why is the name of the intrinsic function “Fn::ForEach”?
 
-CloudFormation considered other syntax names for this intrinsic function such as  `Fn::Map`, `Fn::Repeat`, and `Fn::Build`. Based on our research and community feedback, we have decided to choose `Fn::ForEach` as the looping function name. `Fn::ForEach` is easy to understand for non-programmers and first-time cloud customers. Additionally, for advance CloudFormation customers `Fn::ForEach` represents that for each element in a given collection, a given template fragment would be replicated. For example, customers can replicate a collection [“Transit”, “Public”] to generate two fragments of `AWS::EC2::SubnetNetworkAclAssociation` resource type. See [Appendix A](#appendix-a-pros-and-cons-matrix-for-looping-function-names) for pros and cons matrix of these function names.
+CloudFormation considered other syntax names for this intrinsic function such as  `Fn::Map`, `Fn::Repeat`, and `Fn::Build`. Based on our research and community feedback, we have decided to choose `Fn::ForEach` as the looping function name. `Fn::ForEach` is easy to understand for non-programmers and first-time cloud customers. Additionally, for advanced CloudFormation customers `Fn::ForEach` represents that for each element in a given collection, a given template fragment would be replicated. For example, customers can replicate a collection [“Transit”, “Public”] to generate two fragments of `AWS::EC2::SubnetNetworkAclAssociation` resource type. See [Appendix A](#appendix-a-pros-and-cons-matrix-for-looping-function-names) for a pros and cons matrix of these function names.
 
 ## Examples
 
@@ -614,7 +614,7 @@ Resources:
 
 #### Use case 4: Replicate similar properties
 
-In this example, customer is using Fn::ForEach to duplicate same inputs to  `AWS::EC2::Instance` properties such as ImageId, InstanceType, and AvailabilityZone.
+In this example, the customer is using Fn::ForEach to duplicate the same inputs to `AWS::EC2::Instance` properties such as ImageId, InstanceType, and AvailabilityZone.
 
 #### JSON
 
