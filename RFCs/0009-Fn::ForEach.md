@@ -1,4 +1,4 @@
-# Looping functionality for CFN Templates
+# Fn::ForEach intrinsic function to replicate similar CFN template fragments
 
 * **Original Author(s):**: @arthurboghossian
 * **Tracking Issue**: [Tracking Issue: Fn::ForEach](https://github.com/aws-cloudformation/cfn-language-discussion/issues/9)
@@ -24,6 +24,7 @@ Customers can declare `Fn::ForEach` to iterate over a list of collections to gen
         ["Value1", "Value2"], ## Collection
         {
             "OutputKey": "OutputValue" ## Ex: {"OutputKeyName${Identifier}": "OutputValue"}
+            ## Multiple key-value pairs can be specified within this object
         }
     ]
 }
@@ -36,11 +37,12 @@ Customers can declare `Fn::ForEach` to iterate over a list of collections to gen
   - Identifier
   - [Value1, Value2]  ## Collection
   - 'OutputKey': OutputValue  ## Ex: 'OutputKeyName${Identifier}': 'OutputValue'
+    ## Multiple key-value pairs can be specified within this object
 ```
 
 ### Parameters
 
-`Identifier` (String) → Identifier is used to refer to the current element we’re iterating over within the Collection (array of Strings). Identifier can be used with Ref intrinsic function within OutputKey and OutputValue.
+`Identifier` (String) → Identifier is used to refer to the current element we’re iterating over within the Collection (Array of Strings). Identifier can be used with Ref intrinsic function within OutputKey and OutputValue.
 
 `Collection` (Array of Strings) → Array of values that the Identifier can take. Each element within a Collection when defined in OutputKey and OutputValue will be resolved and merged to the parent object.
 
@@ -163,6 +165,18 @@ Yes, customers are limited to CloudFormation service quota limits such as number
 ### Why is the name of the intrinsic function “Fn::ForEach”?
 
 CloudFormation considered other syntax names for this intrinsic function such as  `Fn::Map`, `Fn::Repeat`, and `Fn::Build`. Based on our research and community feedback, we have decided to choose `Fn::ForEach` as the looping function name. `Fn::ForEach` is easy to understand for non-programmers and first-time cloud customers. Additionally, for advanced CloudFormation customers `Fn::ForEach` represents that for each element in a given collection, a given template fragment would be replicated. For example, customers can replicate a collection [“Transit”, “Public”] to generate two fragments of `AWS::EC2::SubnetNetworkAclAssociation` resource type. See [Appendix A](#appendix-a-pros-and-cons-matrix-for-looping-function-names) for a pros and cons matrix of these function names.
+
+### Can I use an Object for the Collection instead of a List?
+
+This feature will not be available in the initial release (see [Potential Follow-up Features](#potential-follow-up-features)). If there's enough ask for this feature, then it can be added in the future (see [GitHub issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/118) with potential future enhancements to the `Fn::ForEach` intrinsic function).
+
+### Can I output a List instead of a merging an Object to its parent object?
+
+This feature will not be available in the initial release (see [Potential Follow-up Features](#potential-follow-up-features)). If there's enough ask for this feature, then it can be added in the future (see [GitHub issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/118) with potential future enhancements to the `Fn::ForEach` intrinsic function).
+
+### Can I use Modules within Fn::ForEach?
+
+This feature will not be available in the initial release (see [Potential Follow-up Features](#potential-follow-up-features)). If there's enough ask for this feature, then it can be added in the future (see [GitHub issue](https://github.com/aws-cloudformation/cfn-language-discussion/issues/118) with potential future enhancements to the `Fn::ForEach` intrinsic function).
 
 ## Examples
 
@@ -784,10 +798,17 @@ In this example, customer is using two nested `Fn::ForEach` loops in Outputs sec
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Transform": "AWS::LanguageExtensions",
+    "Mappings": {
+        "Buckets": {
+            "Properties": {
+                "Identifiers": ["A", "B", "C"]
+            }
+        }
+    },
     "Resources": {
         "Fn::ForEach::Buckets": [
             "Identifier",
-            ["A", "B", "C"],
+            {"Fn::FindInMap": ["Buckets", "Properties", "Identifiers"]},
             {
                 "S3Bucket${Identifier}": {
                     "Type": "AWS::S3::Bucket",
@@ -824,7 +845,7 @@ In this example, customer is using two nested `Fn::ForEach` loops in Outputs sec
     "Outputs": {
         "Fn::ForEach::BucketOutputs": [
             "Identifier",
-            ["A", "B", "C"],
+            {"Fn::FindInMap": ["Buckets", "Properties", "Identifiers"]},
             {
                 "Fn::ForEach::GetAttLoop": [
                     "Property",
@@ -848,10 +869,14 @@ In this example, customer is using two nested `Fn::ForEach` loops in Outputs sec
 ```yaml
 AWSTemplateFormatVersion: 2010-09-09
 Transform: 'AWS::LanguageExtensions'
+Mappings:
+  Buckets:
+    Properties:
+      Identifiers: [A, B, C]
 Resources:
   'Fn::ForEach::Buckets':
     - Identifier
-    - [A, B, C]
+    - !FindInMap [Buckets, Properties, Identifiers]
     - 'S3Bucket${Identifier}':
         Type: 'AWS::S3::Bucket'
         Properties:
@@ -873,7 +898,7 @@ Resources:
 Outputs:
   'Fn::ForEach::BucketOutputs':
     - Identifier
-    - [A, B, C]
+    - !FindInMap [Buckets, Properties, Identifiers]
     - 'Fn::ForEach::GetAttLoop':
         - Property
         - [Arn, DomainName, WebsiteURL]
@@ -1439,7 +1464,7 @@ Resources:
 
 ## Potential Follow-up Features
 
-Features like supporting iterating over a key-valur pair or allowing Ref/Fn::GetAtt on the UniqueLoopName are out of scope for this RFC.
+Features like supporting iterating over a key-value pair, outputing a list instead of merging to an object or allowing Ref/Fn::GetAtt on the UniqueLoopName are out of scope for this RFC.
 
 The GitHub issue below contains potential follow-up features, where based on customer demand, CloudFormation will create separate RFC’s for those customer pain-points:
 
@@ -1450,12 +1475,12 @@ https://github.com/aws-cloudformation/cfn-language-discussion/issues/118
 
 ### Appendix A: Pros and Cons matrix for looping function names
 
-|FunctionName	|Pros	|Cons	|
-|---	|---	|---	|
-|Fn::ForEach	|Addresses valid feedback in GitHub pull requestIntrinsic function name indicates it’s a functional concept and not an imperative oneForEach Illustrates that we’re operating on a template fragment over a set of valuesGives customers familiar with coding concepts the idea that some form of “looping” (or replication) is done	|Intrinsic function name is potentially not unclear to customers who aren’t familiar with coding concepts; however, the syntax of Fn::ForEach::<ResourceLogicalId> would give users an idea that within the function, we define the template fragment "for each" resource	|
-|Fn::Map	|Addresses valid feedback in GitHub pull requestIntrinsic function name indicates it’s a functional concept and not an imperative oneMap Illustrates that we’re operating on a template fragment over a set of valuesSimilar to the forEach function. However, the map function creates a new array with the results of calling a function for every element, whereas the forEach function doesn't return anything.	|Intrinsic function name is likely not clear to customers who aren’t familiar with coding concepts (specifically the map function)	|
-|Fn::Build	|Indicates a set of template fragments will be “built”/generatedIntrinsic function name is clear to customers who aren’t familiar with coding concepts	|Does not imply iteration being done on a collection	|
-|Fn::Expand	|Indicates a set of template fragments that are collapsed, will be expandedIntrinsic function name is clear to customers who aren’t familiar with coding concepts	|Does not imply iteration being done on a collection	|
-|Fn::Repeat	|Gives the idea that some form of “looping” (or replication) is doneIntrinsic function name is clear to customers who aren’t familiar with coding concepts	|Does not imply iteration being done on a collectionImplies a template fragment will be repeated a set number of times (Note: this can be a separate on customer requests and demand)|
-|Fn::Copy	|Gives the idea that some form of “looping” (or replication) is doneIntrinsic function name is clear to customers who aren’t familiar with coding concepts	|Vaguely implies iteration being done on a collectionCustomers will have to look at documentation to determine exactly what the function does	|
+| FunctionName | Pros | Cons |
+| ------------ | ---- | ---- |
+| Fn::ForEach  | Addresses valid feedback in GitHub pull requestIntrinsic function name indicates it’s a functional concept and not an imperative oneForEach Illustrates that we’re operating on a template fragment over a set of valuesGives customers familiar with coding concepts the idea that some form of “looping” (or replication) is done | Intrinsic function name is potentially not unclear to customers who aren’t familiar with coding concepts; however, the syntax of Fn::ForEach::<ResourceLogicalId> would give users an idea that within the function, we define the template fragment "for each" resource |
+| Fn::Map | Addresses valid feedback in GitHub pull requestIntrinsic function name indicates it’s a functional concept and not an imperative oneMap Illustrates that we’re operating on a template fragment over a set of valuesSimilar to the forEach function. However, the map function creates a new array with the results of calling a function for every element, whereas the forEach function doesn't return anything. | Intrinsic function name is likely not clear to customers who aren’t familiar with coding concepts (specifically the map function) |
+| Fn::Build | Indicates a set of template fragments will be “built”/generatedIntrinsic function name is clear to customers who aren’t familiar with coding concepts | Does not imply iteration being done on a collection |
+| Fn::Expand | Indicates a set of template fragments that are collapsed, will be expandedIntrinsic function name is clear to customers who aren’t familiar with coding concepts | Does not imply iteration being done on a collection |
+| Fn::Repeat | Gives the idea that some form of “looping” (or replication) is doneIntrinsic function name is clear to customers who aren’t familiar with coding concepts | Does not imply iteration being done on a collectionImplies a template fragment will be repeated a set number of times (Note: this can be a separate on customer requests and demand) |
+| Fn::Copy | Gives the idea that some form of “looping” (or replication) is doneIntrinsic function name is clear to customers who aren’t familiar with coding concepts | Vaguely implies iteration being done on a collectionCustomers will have to look at documentation to determine exactly what the function does |
 
