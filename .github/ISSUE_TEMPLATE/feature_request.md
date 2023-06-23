@@ -45,12 +45,12 @@ What is the impact of not having this problem solved? The more details you can p
 ### **Are you currently working around this issue?**
 How are you currently solving this problem?
 
-### **What is the expect behavior with this new feature**
+### **What is the expected behavior with this new feature**
 Please include some code examples showing how this feature can be used.
 
 ### **Additional context**
 Anything else we should know?
 
 ### **Attachments**
-If you think you might have additional information that you wouldd like to include via an attachment, 
+If you think you might have additional information that you would like to include via an attachment, 
 please do - we will take a look. (Remember to remove any personally-identifiable information.)
